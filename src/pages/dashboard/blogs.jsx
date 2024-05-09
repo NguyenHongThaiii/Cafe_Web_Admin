@@ -10,8 +10,16 @@ import {
 } from "@material-tailwind/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { authorsTableData, projectsTableData } from "@/data";
+import { useEffect } from "react";
+import blogsApi from "@/api/blogsApi";
 
-export function Tables() {
+export function Blogs() {
+  useEffect(()=>{
+    (async()=>{
+      const data = await blogsApi.getAll();
+      console.log(data);
+    })();
+  },[])
   return (
     <div className="mt-12 mb-8 flex flex-col gap-12">
       <Card>
@@ -21,7 +29,7 @@ export function Tables() {
           </Typography>
         </CardHeader>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
-          <table className="w-full min-w-[640px] table-auto">
+          <table className="w-full min-w-[640px] table">
             <thead>
               <tr>
                 {["author", "function", "status", "employed", ""].map((el) => (
@@ -76,6 +84,46 @@ export function Tables() {
                         </Typography>
                       </td>
                       <td className={className}>
+                        <Typography className="text-xs font-semibold text-blue-gray-600">
+                          {job[0]}
+                        </Typography>
+                        <Typography className="text-xs font-normal text-blue-gray-500">
+                          {job[1]}
+                        </Typography>
+                      </td>
+                      <td className={className}>
+                        <Typography className="text-xs font-semibold text-blue-gray-600">
+                          {job[0]}
+                        </Typography>
+                        <Typography className="text-xs font-normal text-blue-gray-500">
+                          {job[1]}
+                        </Typography>
+                      </td>
+                      <td className={className}>
+                        <Typography className="text-xs font-semibold text-blue-gray-600">
+                          {job[0]}
+                        </Typography>
+                        <Typography className="text-xs font-normal text-blue-gray-500">
+                          {job[1]}
+                        </Typography>
+                      </td>
+                      <td className={className}>
+                        <Typography className="text-xs font-semibold text-blue-gray-600">
+                          {job[0]}
+                        </Typography>
+                        <Typography className="text-xs font-normal text-blue-gray-500">
+                          {job[1]}
+                        </Typography>
+                      </td>
+                      <td className={className}>
+                        <Typography className="text-xs font-semibold text-blue-gray-600">
+                          {job[0]}
+                        </Typography>
+                        <Typography className="text-xs font-normal text-blue-gray-500">
+                          {job[1]}
+                        </Typography>
+                      </td>
+                      <td className={className}>
                         <Chip
                           variant="gradient"
                           color={online ? "green" : "blue-gray"}
@@ -105,7 +153,7 @@ export function Tables() {
           </table>
         </CardBody>
       </Card>
-      <Card>
+      {/* <Card>
         <CardHeader variant="gradient" color="gray" className="mb-8 p-6">
           <Typography variant="h6" color="white">
             Projects Table
@@ -213,9 +261,9 @@ export function Tables() {
             </tbody>
           </table>
         </CardBody>
-      </Card>
+      </Card> */}
     </div>
   );
 }
 
-export default Tables;
+export default Blogs;
