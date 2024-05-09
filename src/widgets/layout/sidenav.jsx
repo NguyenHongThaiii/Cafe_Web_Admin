@@ -26,6 +26,8 @@ export function Sidenav({ brandImg, brandName, routes }) {
     >
       <div
         className={`relative`}
+        onClick={() => setOpenSidenav(dispatch, false)}
+
       >
         <Link to="/" className="py-6 px-8 text-center">
           <Typography
@@ -41,7 +43,6 @@ export function Sidenav({ brandImg, brandName, routes }) {
           size="sm"
           ripple={false}
           className="absolute right-0 top-0 grid rounded-br-none rounded-tl-none xl:hidden"
-          onClick={() => setOpenSidenav(dispatch, false)}
         >
           <XMarkIcon strokeWidth={2.5} className="h-5 w-5 text-white" />
         </IconButton>
@@ -62,7 +63,10 @@ export function Sidenav({ brandImg, brandName, routes }) {
             )}
             {pages.map(({ icon, name, path }) => (
               <li key={name}>
-                <NavLink to={`/${layout}${path}`}>
+                <NavLink to={`/${layout}${path}`}
+                          onClick={() => setOpenSidenav(dispatch, false)}
+
+                >
                   {({ isActive }) => (
                     <Button
                       variant={isActive ? "gradient" : "text"}
