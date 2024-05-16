@@ -27,7 +27,6 @@ export function Sidenav({ brandImg, brandName, routes }) {
       <div
         className={`relative`}
         onClick={() => setOpenSidenav(dispatch, false)}
-
       >
         <Link to="/" className="py-6 px-8 text-center">
           <Typography
@@ -63,12 +62,13 @@ export function Sidenav({ brandImg, brandName, routes }) {
             )}
             {pages.map(({ icon, name, path }) => (
               <li key={name}>
-                <NavLink to={`/${layout}${path}`}
-                          onClick={() => setOpenSidenav(dispatch, false)}
-
+                <NavLink
+                  to={`/${layout}${path}`}
+                  onClick={() => setOpenSidenav(dispatch, false)}
                 >
                   {({ isActive }) => (
                     <Button
+                      size="sm"
                       variant={isActive ? "gradient" : "text"}
                       color={
                         isActive
@@ -101,7 +101,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
 
 Sidenav.defaultProps = {
   brandImg: "/img/logo-ct.png",
-  brandName: "Material Tailwind React",
+  brandName: "Dashboard Tôi Đi Cafe",
 };
 
 Sidenav.propTypes = {

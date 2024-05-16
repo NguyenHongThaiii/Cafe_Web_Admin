@@ -25,8 +25,11 @@ import {
   setOpenConfigurator,
   setOpenSidenav,
 } from "@/context";
+import { useSelector } from "react-redux";
 
 export function DashboardNavbar() {
+  const user = useSelector((state) => state.auth.current);
+  console.log(user);
   const [controller, dispatch] = useMaterialTailwindController();
   const { fixedNavbar, openSidenav } = controller;
   const { pathname } = useLocation();
@@ -83,23 +86,76 @@ export function DashboardNavbar() {
           >
             <Bars3Icon strokeWidth={3} className="h-6 w-6 text-blue-gray-500" />
           </IconButton>
-          <Link to="/auth/sign-in">
-            <Button
-              variant="text"
-              color="blue-gray"
-              className="hidden items-center gap-1 px-4 xl:flex normal-case"
-            >
-              <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
-              Sign In
-            </Button>
-            <IconButton
-              variant="text"
-              color="blue-gray"
-              className="grid xl:hidden"
-            >
-              <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
-            </IconButton>
-          </Link>
+          {user?.id ? (
+            <Link to="/dashboard/profile">
+              <Button
+                variant="text"
+                color="blue-gray"
+                className="hidden items-center gap-1 px-4 xl:flex normal-case"
+              >
+                <div className="relative cursor-pointer w-[30px] h-[30px] rounded-full overflow-hidden  ">
+                  <img
+                    src={`${
+                      user.image != null
+                        ? user?.image?.url
+                        : "/img/user-default.jpg"
+                    }`}
+                    alt={user.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                {/* <UserCircleIcon className="h-5 w-5 text-blue-gray-500" /> */}
+                {/* Sign In */}
+              </Button>
+              <IconButton
+                variant="text"
+                color="blue-gray"
+                className="grid xl:hidden"
+              >
+                <div className="relative cursor-pointer w-[20px] h-[20px] rounded-full overflow-hidden  ">
+                  <img
+                    src={`${
+                      user.image != null
+                        ? user?.image?.url
+                        : "/img/user-default.jpg"
+                    }`}
+                    alt={user.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </IconButton>
+            </Link>
+          ) : (
+            <Link to="/auth/sign-in">
+              <Button
+                variant="text"
+                color="blue-gray"
+                className="hidden items-center gap-1 px-4 xl:flex normal-case"
+              >
+                <div className="relative cursor-pointer w-[30px] h-[30px] rounded-full overflow-hidden  ">
+                  <img
+                    src={`${
+                      user.image != null
+                        ? user?.image?.url
+                        : "/img/user-default.jpg"
+                    }`}
+                    alt={user.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
+                Sign In
+              </Button>
+              <IconButton
+                variant="text"
+                color="blue-gray"
+                className="grid xl:hidden"
+              >
+                <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
+              </IconButton>
+            </Link>
+          )}
+
           <Menu>
             <MenuHandler>
               <IconButton variant="text" color="blue-gray">

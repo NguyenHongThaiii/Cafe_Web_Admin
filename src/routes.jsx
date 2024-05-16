@@ -1,11 +1,11 @@
 import { SignIn } from "@/pages/auth";
-import { Blogs, Home, Notifications, Profile } from "@/pages/dashboard";
+import { Blogs, Home, Notifications, Profile, Users } from "@/pages/dashboard";
 import {
   HomeIcon,
   InformationCircleIcon,
   ServerStackIcon,
   TableCellsIcon,
-  UserCircleIcon
+  UserCircleIcon,
 } from "@heroicons/react/24/solid";
 
 const icon = {
@@ -19,7 +19,7 @@ export const routes = [
       {
         icon: <HomeIcon {...icon} />,
         name: "dashboard",
-        path: "/home",
+        path: "/",
         element: <Home />,
       },
       {
@@ -33,6 +33,12 @@ export const routes = [
         name: "blogs",
         path: "/blogs",
         element: <Blogs />,
+      },
+      {
+        icon: <TableCellsIcon {...icon} />,
+        name: "users",
+        path: "/users",
+        element: <Users />,
       },
       {
         icon: <InformationCircleIcon {...icon} />,
@@ -52,7 +58,6 @@ export const routes = [
         path: "/sign-in",
         element: <SignIn />,
       },
-    
     ],
   },
 ];

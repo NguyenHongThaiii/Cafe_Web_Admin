@@ -7,32 +7,67 @@ import {
   Chip,
   Tooltip,
   Progress,
+  Button,
 } from "@material-tailwind/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { authorsTableData, projectsTableData } from "@/data";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import blogsApi from "@/api/blogsApi";
+import { Link } from "react-router-dom";
+import Pagination from "@/widgets/layout/pagination";
 
 export function Blogs() {
-  useEffect(()=>{
-    (async()=>{
-      const data = await blogsApi.getAll();
-      console.log(data);
+  const [state, setState] = useState([]);
+  const [count, setCount] = useState(0);
+  const [filters, setFilters] = useState({
+    page: 1,
+    limit: 5,
+  });
+  useEffect(() => {
+    (async () => {
+      const count = await blogsApi.getAll({ page: 0 });
+      setCount(count?.length);
     })();
-  },[])
+  }, []);
+  useEffect(() => {
+    (async () => {
+      const data = await blogsApi.getAll(filters);
+      setState(data);
+    })();
+  }, [filters, count]);
+  const handlePageChange = (page) => {
+    setFilters((prev) => ({ ...prev, page: page }));
+  };
   return (
     <div className="mt-12 mb-8 flex flex-col gap-12">
       <Card>
-        <CardHeader variant="gradient" color="gray" className="mb-8 p-6">
+        <CardHeader
+          variant="gradient"
+          color="gray"
+          className="mb-8 p-6 flex justify-between items-center"
+        >
           <Typography variant="h6" color="white">
-            Authors Table
+            Blogs Table
+          </Typography>
+          <Typography as="a" href="/dashboard/create-blog">
+            <Button color="white" size="sm">
+              Create Blog
+            </Button>
           </Typography>
         </CardHeader>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
           <table className="w-full min-w-[640px] table">
             <thead>
               <tr>
-                {["author", "function", "status", "employed", ""].map((el) => (
+                {[
+                  "name",
+                  "description",
+                  "price",
+                  "slug",
+                  "phone",
+                  "status",
+                  "action",
+                ].map((el) => (
                   <th
                     key={el}
                     className="border-b border-blue-gray-50 py-3 px-5 text-left"
@@ -48,112 +83,137 @@ export function Blogs() {
               </tr>
             </thead>
             <tbody>
-              {authorsTableData.map(
-                ({ img, name, email, job, online, date }, key) => {
-                  const className = `py-3 px-5 ${
-                    key === authorsTableData.length - 1
-                      ? ""
-                      : "border-b border-blue-gray-50"
-                  }`;
+              {state.map((blog, key) => {
+                const className = `py-3 px-5 ${
+                  key === state.length - 1 ? "" : "border-b border-blue-gray-50"
+                }`;
 
-                  return (
-                    <tr key={name}>
-                      <td className={className}>
-                        <div className="flex items-center gap-4">
-                          <Avatar src={img} alt={name} size="sm" variant="rounded" />
-                          <div>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-semibold"
-                            >
-                              {name}
-                            </Typography>
-                            <Typography className="text-xs font-normal text-blue-gray-500">
-                              {email}
-                            </Typography>
-                          </div>
-                        </div>
-                      </td>
-                      <td className={className}>
-                        <Typography className="text-xs font-semibold text-blue-gray-600">
-                          {job[0]}
-                        </Typography>
-                        <Typography className="text-xs font-normal text-blue-gray-500">
-                          {job[1]}
-                        </Typography>
-                      </td>
-                      <td className={className}>
-                        <Typography className="text-xs font-semibold text-blue-gray-600">
-                          {job[0]}
-                        </Typography>
-                        <Typography className="text-xs font-normal text-blue-gray-500">
-                          {job[1]}
-                        </Typography>
-                      </td>
-                      <td className={className}>
-                        <Typography className="text-xs font-semibold text-blue-gray-600">
-                          {job[0]}
-                        </Typography>
-                        <Typography className="text-xs font-normal text-blue-gray-500">
-                          {job[1]}
-                        </Typography>
-                      </td>
-                      <td className={className}>
-                        <Typography className="text-xs font-semibold text-blue-gray-600">
-                          {job[0]}
-                        </Typography>
-                        <Typography className="text-xs font-normal text-blue-gray-500">
-                          {job[1]}
-                        </Typography>
-                      </td>
-                      <td className={className}>
-                        <Typography className="text-xs font-semibold text-blue-gray-600">
-                          {job[0]}
-                        </Typography>
-                        <Typography className="text-xs font-normal text-blue-gray-500">
-                          {job[1]}
-                        </Typography>
-                      </td>
-                      <td className={className}>
-                        <Typography className="text-xs font-semibold text-blue-gray-600">
-                          {job[0]}
-                        </Typography>
-                        <Typography className="text-xs font-normal text-blue-gray-500">
-                          {job[1]}
-                        </Typography>
-                      </td>
-                      <td className={className}>
-                        <Chip
-                          variant="gradient"
-                          color={online ? "green" : "blue-gray"}
-                          value={online ? "online" : "offline"}
-                          className="py-0.5 px-2 text-[11px] font-medium w-fit"
+                return (
+                  <tr key={blog?.id}>
+                    <td className={className}>
+                      <div className="flex items-center gap-4">
+                        <Avatar
+                          src={
+                            blog?.listImage?.length > 0
+                              ? blog?.listImage[0]?.url
+                              : ""
+                          }
+                          alt={blog?.name}
+                          size="sm"
+                          variant="rounded"
                         />
-                      </td>
-                      <td className={className}>
-                        <Typography className="text-xs font-semibold text-blue-gray-600">
-                          {date}
-                        </Typography>
-                      </td>
-                      <td className={className}>
-                        <Typography
-                          as="a"
-                          href="#"
-                          className="text-xs font-semibold text-blue-gray-600"
+                        <div>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-semibold"
+                          >
+                            {blog?.name}
+                          </Typography>
+                          <Typography className="text-xs font-normal text-blue-gray-500">
+                            {blog?.location}
+                          </Typography>
+                        </div>
+                      </div>
+                    </td>
+                    <td className={className}>
+                      <Typography className="text-xs font-semibold text-blue-gray-600">
+                        {blog?.description}
+                      </Typography>
+                      {/* <Typography className="text-xs font-normal text-blue-gray-500">
+                          {"123"}
+                        </Typography> */}
+                    </td>
+
+                    <td className={className}>
+                      <Typography className="text-xs font-semibold text-blue-gray-600">
+                        {blog?.priceMin} - {blog?.priceMax}
+                      </Typography>
+                    </td>
+                    <td className={className}>
+                      <Typography className="text-xs font-semibold text-blue-gray-600">
+                        {blog?.slug}
+                      </Typography>
+                    </td>
+                    <td className={className}>
+                      <Typography className="text-xs font-semibold text-blue-gray-600">
+                        {blog?.phone}
+                      </Typography>
+                    </td>
+                    <td className={className}>
+                      <Chip
+                        variant="gradient"
+                        color={blog?.status != 0 ? "green" : "blue-gray"}
+                        value={blog?.status != 0 ? "active" : "inactive"}
+                        className="py-0.5 px-2 text-[11px] font-medium w-fit"
+                      />
+                    </td>
+                    <td className={className}>
+                      <Typography
+                        as="a"
+                        href={`/dashboard/edit-place/${blog?.slug}`}
+                        className="text-xs font-semibold text-blue-gray-600 flex items-center gap-2 transition-all hover:bg-gray-300 p-1 rounded-md"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="w-6 h-6"
                         >
-                          Edit
-                        </Typography>
-                      </td>
-                    </tr>
-                  );
-                }
-              )}
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
+                          />
+                        </svg>
+                        Edit
+                      </Typography>
+                      <Typography
+                        as="a"
+                        href="#"
+                        className="text-xs font-semibold text-blue-gray-600 flex items-center gap-2 mt-2 transition-all hover:bg-gray-300 p-1 rounded-md"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="w-6 h-6"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
+                          />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                          />
+                        </svg>
+                        View
+                      </Typography>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </CardBody>
+        <div>
+          <Pagination
+            data={state}
+            onChange={(page) => handlePageChange(page)}
+            itemsPerPage={5}
+            count={count}
+            page={filters?.page}
+          />
+        </div>
       </Card>
-      {/* <Card>
+      <Card>
         <CardHeader variant="gradient" color="gray" className="mb-8 p-6">
           <Typography variant="h6" color="white">
             Projects Table
@@ -261,7 +321,7 @@ export function Blogs() {
             </tbody>
           </table>
         </CardBody>
-      </Card> */}
+      </Card>
     </div>
   );
 }
