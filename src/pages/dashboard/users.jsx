@@ -19,16 +19,16 @@ import Pagination from "@/widgets/layout/pagination";
 
 export function Users() {
   const [state, setState] = useState([]);
-  const [count, setCount] = useState(10);
+  const [count, setCount] = useState(0);
   const [filters, setFilters] = useState({
     page: 1,
     limit: 5,
   });
   useEffect(() => {
     (async () => {
-      // const count = await usersApi.getAll({ page: 0 });
-      // console.log(count);
-      // setCount(count?.length);
+      const count = await usersApi.getAll({ page: 0 });
+      console.log(count);
+      setCount(count?.length);
     })();
   }, []);
   useEffect(() => {

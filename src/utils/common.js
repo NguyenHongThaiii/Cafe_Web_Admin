@@ -1,6 +1,3 @@
-
-
-
 export const getLocalStorage = (name) => {
   if (!localStorage.getItem(name) || localStorage.getItem(name) === "undefined")
     return null;
@@ -59,9 +56,6 @@ export const handleCalculateDateFromNow = (date) => {
     ? `từ ${Difference_In_Days} ngày trước`
     : "trong hôm nay";
 };
-
-
-
 
 export function timeToNumber(timeString) {
   if (!timeString) return;

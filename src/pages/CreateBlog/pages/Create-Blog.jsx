@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 // import LayoutUser from "../../../components/Layout/Layout-User";
-// import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import areasApi from "@/api/areasApi";
@@ -83,7 +83,7 @@ const schema = yup.object({
 CreateBlog.propTypes = {};
 
 function CreateBlog(props) {
-  // const user = useSelector((state) => state.auth.current);
+  const user = useSelector((state) => state.auth.current);
   const navigate = useNavigate();
   const [values, setValues] = useState();
   const [error, setError] = useState({});
@@ -177,7 +177,7 @@ function CreateBlog(props) {
       formData.append("convenience_id", data?.convenience_id);
       formData.append("description", data?.description);
       formData.append("location", data?.location);
-      formData.append("userId", user.id);
+      formData.append("userId", user?.id);
       formData.append("kind_id", data?.kind_id);
       formData.append("status", data?.status);
       formData.append("priceMin", data?.priceMin);

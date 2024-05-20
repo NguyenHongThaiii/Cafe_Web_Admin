@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getLocalStorage, setLocalStorage } from "@/utils";
+import { getLocalStorage, removeLocalStorage, setLocalStorage } from "@/utils";
 import { STORAGE_KEY } from "@/constant";
 import usersApi from "@/api/usersApi";
 

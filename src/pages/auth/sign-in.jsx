@@ -9,13 +9,15 @@ import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InputControl from "@/Form-Control/Input-Control";
 import PasswordControl from "@/Form-Control/Password-Control";
 import { login } from "./authSlice";
 import { useDispatch } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
+import { getLocalStorage } from "@/utils";
+import { STORAGE_KEY } from "@/constant";
 
 const schema = yup.object({
   email: yup
@@ -32,7 +34,17 @@ const schema = yup.object({
 export function SignIn() {
   const [error, setError] = useState("");
   const dispatch = useDispatch();
+
   const navigate = useNavigate();
+  const isLogin = JSON.parse(getLocalStorage(STORAGE_KEY.USER))?.id;
+  useEffect(() => {
+    if (!isLogin) {
+    } else {
+      navigate("/");
+      return;
+    }
+  }, []);
+
   const { control, handleSubmit, setValue, formState } = useForm({
     mode: "onSubmit",
     reValidateMode: "onSubmit",

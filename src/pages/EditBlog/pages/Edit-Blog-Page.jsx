@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import areasApi from "@/api/areasApi";
 import blogsApi from "@/api/blogsApi";
 import conveniencesApi from "@/api/conveniencesApi";
@@ -90,7 +90,7 @@ const schema = yup.object({
 function EditBlogPage(props) {
   const location = useLocation();
   const navigate = useNavigate();
-  // const user = useSelector((state) => state.auth.current);
+  const user = useSelector((state) => state.auth.current);
   const slug = location.pathname.split("/")[3];
   const [values, setValues] = useState();
   const [error, setError] = useState({});
@@ -232,7 +232,7 @@ function EditBlogPage(props) {
       formData.append("convenience_id", data?.convenience_id);
       formData.append("description", data?.description);
       formData.append("location", data?.location);
-      formData.append("userId", user.id);
+      formData.append("userId", user?.id);
       formData.append("kind_id", data?.kind_id);
       formData.append("purpose_id", data?.purpose_id);
 

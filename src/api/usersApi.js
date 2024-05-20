@@ -2,13 +2,10 @@ import axiosClient from "./axiosClient";
 
 const usersApi = {
   login(data) {
-    const url = "/auth/login";
+    const url = "/auth/admin/login";
     return axiosClient.post(url, data);
   },
-  signup(data) {
-    const url = "/auth/signup";
-    return axiosClient.post(url, data);
-  },
+
   logout() {
     const url = "/auth/logout";
     return axiosClient.get(url);

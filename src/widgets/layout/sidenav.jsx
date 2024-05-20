@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
   Avatar,
@@ -8,8 +8,13 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { useMaterialTailwindController, setOpenSidenav } from "@/context";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "@/pages/auth/authSlice";
 
 export function Sidenav({ brandImg, brandName, routes }) {
+  const user = useSelector((state) => state.auth.current);
+  const dispatcher = useDispatch();
+  const navigate = useNavigate();
   const [controller, dispatch] = useMaterialTailwindController();
   const { sidenavColor, sidenavType, openSidenav } = controller;
   const sidenavTypes = {
@@ -17,7 +22,11 @@ export function Sidenav({ brandImg, brandName, routes }) {
     white: "bg-white shadow-sm",
     transparent: "bg-transparent",
   };
-
+  const handleLogout = async () => {
+    await dispatcher(logout());
+    setOpenSidenav(dispatch, false);
+    navigate("/auth/sign-in");
+  };
   return (
     <aside
       className={`${sidenavTypes[sidenavType]} ${
@@ -60,38 +69,60 @@ export function Sidenav({ brandImg, brandName, routes }) {
                 </Typography>
               </li>
             )}
-            {pages.map(({ icon, name, path }) => (
-              <li key={name}>
-                <NavLink
-                  to={`/${layout}${path}`}
-                  onClick={() => setOpenSidenav(dispatch, false)}
-                >
-                  {({ isActive }) => (
-                    <Button
-                      size="sm"
-                      variant={isActive ? "gradient" : "text"}
-                      color={
-                        isActive
-                          ? sidenavColor
-                          : sidenavType === "dark"
-                          ? "white"
-                          : "blue-gray"
-                      }
-                      className="flex items-center gap-4 px-4 capitalize"
-                      fullWidth
+
+            {pages.map(({ icon, name, path }) =>
+              name === "sign in" && user?.id ? (
+                <li key={name}>
+                  <Button
+                    onClick={handleLogout}
+                    size="sm"
+                    variant={"text"}
+                    color={"blue-gray"}
+                    className="flex items-center gap-4 px-4 capitalize"
+                    fullWidth
+                  >
+                    {icon}
+                    <Typography
+                      color="inherit"
+                      className="font-medium capitalize"
                     >
-                      {icon}
-                      <Typography
-                        color="inherit"
-                        className="font-medium capitalize"
+                      Logout
+                    </Typography>
+                  </Button>
+                </li>
+              ) : (
+                <li key={name}>
+                  <NavLink
+                    to={`/${layout}${path}`}
+                    onClick={() => setOpenSidenav(dispatch, false)}
+                  >
+                    {({ isActive }) => (
+                      <Button
+                        size="sm"
+                        variant={isActive ? "gradient" : "text"}
+                        color={
+                          isActive
+                            ? sidenavColor
+                            : sidenavType === "dark"
+                            ? "white"
+                            : "blue-gray"
+                        }
+                        className="flex items-center gap-4 px-4 capitalize"
+                        fullWidth
                       >
-                        {name}
-                      </Typography>
-                    </Button>
-                  )}
-                </NavLink>
-              </li>
-            ))}
+                        {icon}
+                        <Typography
+                          color="inherit"
+                          className="font-medium capitalize"
+                        >
+                          {name}
+                        </Typography>
+                      </Button>
+                    )}
+                  </NavLink>
+                </li>
+              )
+            )}
           </ul>
         ))}
       </div>
