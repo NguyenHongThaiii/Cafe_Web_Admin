@@ -24,7 +24,7 @@ function PasswordControl({ control, setValue = null, ...props }) {
     setValue(props.name, e.target.value);
   };
   return (
-    <div className="relative">
+    <div className="relative w-full">
       {!show ? (
         <BsFillEyeFill
           onClick={() => setShow((prev) => !prev)}
