@@ -9,3 +9,4 @@ export * from "@/api/blogsApi";
 export * from "@/api/blog-savedApi";
 export * from "@/api/axiosClient";
 export * from "@/api/areasApi";
+export * from "@/api/rolesApi";

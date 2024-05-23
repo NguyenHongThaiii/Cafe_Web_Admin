@@ -52,11 +52,11 @@ export function Users() {
           <Typography variant="h6" color="white">
             Blogs Table
           </Typography>
-          <Typography as="a" href="#">
+          {/* <Typography as="a" href="/dashboard/create-user">
             <Button color="white" size="sm">
               Create User
             </Button>
-          </Typography>
+          </Typography> */}
         </CardHeader>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
           <table className="w-full min-w-[640px] table">
@@ -151,7 +151,7 @@ export function Users() {
                     <td className={className}>
                       <Typography
                         as="a"
-                        href="#"
+                        href={`/dashboard/edit-user/${user?.slug}`}
                         className="text-xs font-semibold text-blue-gray-600 flex items-center gap-2 transition-all hover:bg-gray-300 p-1 rounded-md"
                       >
                         <svg
