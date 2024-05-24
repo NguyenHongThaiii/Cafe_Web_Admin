@@ -16,3 +16,15 @@ export const TIME_DATA = [
     value: "close",
   },
 ];
+export const STATUS_ARRAY = [
+  {
+    id: 1,
+    label: "Active",
+    value: 1,
+  },
+  {
+    id: 2,
+    label: "Inactive",
+    value: 0,
+  },
+];

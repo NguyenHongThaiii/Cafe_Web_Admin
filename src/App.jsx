@@ -11,6 +11,7 @@ import EditBlogPage from "@/pages/EditBlog/pages/Edit-Blog-Page";
 import { getLocalStorage } from "@/utils";
 import { STORAGE_KEY } from "@/constant";
 import { useEffect } from "react";
+import EditUserPage from "@/pages/EditUser/pages/Edit-User-Page";
 
 function App() {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ function App() {
     <Routes>
       <Route path="/dashboard/*" element={<Dashboard />} />
       <Route path="/dashboard/create-blog" element={<CreateBlog />} />
+      <Route path="/dashboard/edit-user/:slug" element={<EditUserPage />} />
       <Route path="/auth/*" element={<Auth />} />
       <Route path="/dashboard/edit-place/:name" element={<EditBlogPage />} />
 
