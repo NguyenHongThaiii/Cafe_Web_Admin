@@ -15,9 +15,9 @@ const blogsApi = {
     const url = `/products/id/${id}`;
     return axiosClient.get(url);
   },
-  getCount(count) {
-    const url = `/products/count/${count}`;
-    return axiosClient.get(url);
+  getCount(params) {
+    const url = `/products/count`;
+    return axiosClient.get(url, { params });
   },
   createProduct(body) {
     const url = `/products`;

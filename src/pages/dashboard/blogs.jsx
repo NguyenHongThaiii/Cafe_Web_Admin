@@ -1,42 +1,46 @@
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Typography,
-  Avatar,
-  Chip,
-  Tooltip,
-  Progress,
-  Button,
-} from "@material-tailwind/react";
-import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
-import { authorsTableData, projectsTableData } from "@/data";
-import { useEffect, useState } from "react";
+import InputControl from "@/Form-Control/Input-Control";
+import InputControlCommon from "@/Form-Control/Input-Control-Common";
 import blogsApi from "@/api/blogsApi";
-import { Link } from "react-router-dom";
 import Pagination from "@/widgets/layout/pagination";
+import {
+  Avatar,
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Chip,
+  Input,
+  Typography,
+} from "@material-tailwind/react";
+import debounce from "lodash.debounce";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
 export function Blogs() {
+  const { control, handleSubmit, setValue, formState } = useForm({
+    mode: "onChange",
+  });
   const [state, setState] = useState([]);
   const [count, setCount] = useState(0);
   const [filters, setFilters] = useState({
     page: 1,
     limit: 5,
   });
-  useEffect(() => {
-    (async () => {
-      const count = await blogsApi.getAll({ page: 0 });
-      setCount(count?.length);
-    })();
-  }, []);
+
   useEffect(() => {
     (async () => {
       const data = await blogsApi.getAll(filters);
+      const count = await blogsApi.getCount({ ...filters, page: 0 });
+      setCount(count);
+      console.log(count);
       setState(data);
     })();
-  }, [filters, count]);
+  }, [filters]);
   const handlePageChange = (page) => {
     setFilters((prev) => ({ ...prev, page: page }));
+  };
+  const handleChangeInput = (data) => {
+    setFilters((prev) => ({ ...prev, page: 1, name: data?.name }));
   };
   return (
     <div className="mt-12 mb-8 flex flex-col gap-12">
@@ -55,6 +59,24 @@ export function Blogs() {
             </Button>
           </Typography>
         </CardHeader>
+        <div className="md:mr-4 flex items-center justify-end mb-4 px-4 lg:px-0">
+          <form
+            onChange={handleSubmit(debounce(handleChangeInput, 300))}
+            className="flex items-center"
+          >
+            <label htmlFor="search" className="w-[200px]">
+              Find By Name:
+            </label>
+            <InputControlCommon
+              control={control}
+              name="name"
+              focus
+              id="name"
+              type="name"
+              placeholder="ex: Sunny Cafe"
+            />
+          </form>
+        </div>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
           <table className="w-full min-w-[640px] table">
             <thead>

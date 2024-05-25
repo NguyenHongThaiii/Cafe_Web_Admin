@@ -20,7 +20,6 @@ function App() {
 
   useEffect(() => {
     if (!isLogin) {
-      console.log(isLogin);
       navigate("/auth/sign-in");
     }
   }, [location.pathname]);
