@@ -1,5 +1,12 @@
 import { SignIn } from "@/pages/auth";
-import { Blogs, Home, Notifications, Profile, Users } from "@/pages/dashboard";
+import {
+  Blogs,
+  Home,
+  Notifications,
+  Profile,
+  Users,
+  Loggers,
+} from "@/pages/dashboard";
 import {
   HomeIcon,
   InformationCircleIcon,
@@ -39,6 +46,12 @@ export const routes = [
         name: "users",
         path: "/users",
         element: <Users />,
+      },
+      {
+        icon: <TableCellsIcon {...icon} />,
+        name: "logs",
+        path: "/loggers",
+        element: <Loggers />,
       },
       {
         icon: <InformationCircleIcon {...icon} />,

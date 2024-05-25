@@ -1,37 +1,45 @@
-import usersApi from "@/api/usersApi";
+import InputControlCommon from "@/Form-Control/Input-Control-Common";
+import blogsApi from "@/api/blogsApi";
+import loggersAPi from "@/api/loggersApi";
 import Pagination from "@/widgets/layout/pagination";
 import {
   Avatar,
+  Button,
   Card,
   CardBody,
   CardHeader,
   Chip,
+  Input,
   Typography,
 } from "@material-tailwind/react";
+import debounce from "lodash.debounce";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
-export function Users() {
+export function Loggers() {
+  const { control, handleSubmit, setValue, formState } = useForm({
+    mode: "onChange",
+  });
   const [state, setState] = useState([]);
   const [count, setCount] = useState(0);
   const [filters, setFilters] = useState({
     page: 1,
     limit: 5,
   });
-  useEffect(() => {
-    (async () => {
-      const count = await usersApi.getAll({ page: 0 });
-      setCount(count?.length);
-    })();
-  }, []);
-  useEffect(() => {
-    (async () => {
-      const users = await usersApi.getAll(filters);
-      setState(users);
-    })();
-  }, [filters, count]);
 
+  useEffect(() => {
+    (async () => {
+      const loggers = await loggersAPi.getAll(filters);
+      const count = await loggersAPi.getCount({ ...filters, page: 0 });
+      setState(loggers);
+      setCount(count);
+    })();
+  }, [filters]);
   const handlePageChange = (page) => {
     setFilters((prev) => ({ ...prev, page: page }));
+  };
+  const handleChangeInput = (data) => {
+    setFilters((prev) => ({ ...prev, page: 1, createdAt: data?.createdAt }));
   };
   return (
     <div className="mt-12 mb-8 flex flex-col gap-12">
@@ -42,26 +50,38 @@ export function Users() {
           className="mb-8 p-6 flex justify-between items-center"
         >
           <Typography variant="h6" color="white">
-            Blogs Table
+            Logs Table
           </Typography>
-          {/* <Typography as="a" href="/dashboard/create-user">
-            <Button color="white" size="sm">
-              Create User
-            </Button>
-          </Typography> */}
         </CardHeader>
+        <div className="md:mr-4 flex items-center justify-end mb-4 px-4 lg:px-0">
+          <form
+            onChange={handleSubmit(debounce(handleChangeInput, 300))}
+            className=" flex items-center "
+          >
+            <label htmlFor="search" className="w-[200px]">
+              Find By Date
+            </label>
+            <InputControlCommon
+              control={control}
+              name="createdAt"
+              focus
+              id="createdAt"
+              placeholder="21-12-2023 18:26:28"
+            />{" "}
+          </form>
+        </div>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
           <table className="w-full min-w-[640px] table">
             <thead>
               <tr>
                 {[
-                  "name",
-                  "email",
-                  "phone",
-                  "slug",
-                  "role",
-                  "status",
+                  "method",
+                  "agent",
+                  "message",
+                  "result",
                   "action",
+                  "created_at",
+                  "",
                 ].map((el) => (
                   <th
                     key={el}
@@ -78,73 +98,57 @@ export function Users() {
               </tr>
             </thead>
             <tbody>
-              {state.map((user, key) => {
+              {state.map((log, key) => {
                 const className = `py-3 px-5 ${
                   key === state.length - 1 ? "" : "border-b border-blue-gray-50"
                 }`;
 
                 return (
-                  <tr key={user?.id}>
+                  <tr key={log?.id}>
                     <td className={className}>
                       <div className="flex items-center gap-4">
-                        <Avatar
-                          src={user?.image?.url || "/img/user-default.jpg"}
-                          alt={user?.name}
-                          size="sm"
-                          variant="rounded"
-                        />
                         <div>
                           <Typography
                             variant="small"
                             color="blue-gray"
                             className="font-semibold"
                           >
-                            {user?.name}
-                          </Typography>
-                          <Typography className="text-xs font-normal text-blue-gray-500">
-                            {user?.address}
+                            {log?.method}
                           </Typography>
                         </div>
                       </div>
                     </td>
                     <td className={className}>
                       <Typography className="text-xs font-semibold text-blue-gray-600">
-                        {user?.email}
+                        {log?.agent}
                       </Typography>
                     </td>
 
                     <td className={className}>
                       <Typography className="text-xs font-semibold text-blue-gray-600">
-                        {user?.phone}
+                        {log?.message}
                       </Typography>
                     </td>
                     <td className={className}>
                       <Typography className="text-xs font-semibold text-blue-gray-600">
-                        {user?.slug}
+                        {log?.result}
                       </Typography>
                     </td>
                     <td className={className}>
                       <Typography className="text-xs font-semibold text-blue-gray-600">
-                        {user?.roles?.map((role, idx) =>
-                          idx === user?.roles?.length - 1
-                            ? role?.name
-                            : role?.name + " & "
-                        )}
+                        {log?.action}
                       </Typography>
                     </td>
                     <td className={className}>
-                      <Chip
-                        variant="gradient"
-                        color={user?.status ? "green" : "blue-gray"}
-                        value={user?.status ? "active" : "inactive"}
-                        className="py-0.5 px-2 text-[11px] font-medium w-fit"
-                      />
+                      <Typography className="text-xs font-semibold text-blue-gray-600">
+                        {log?.createdAt}
+                      </Typography>
                     </td>
                     <td className={className}>
                       <Typography
                         as="a"
-                        href={`/dashboard/edit-user/${user?.slug}`}
-                        className="text-xs font-semibold text-blue-gray-600 flex items-center gap-2 transition-all hover:bg-gray-300 p-1 rounded-md"
+                        href="#"
+                        className="text-xs font-semibold text-blue-gray-600 flex items-center gap-2 mt-2 transition-all hover:bg-gray-300 p-1 rounded-md"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -163,27 +167,6 @@ export function Users() {
                             strokeLinecap="round"
                             strokeLinejoin="round"
                             d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                          />
-                        </svg>
-                        Edit
-                      </Typography>
-                      <Typography
-                        as="a"
-                        href="#"
-                        className="text-xs font-semibold text-blue-gray-600 flex items-center gap-2 mt-2 transition-all hover:bg-gray-300 p-1 rounded-md"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1.5}
-                          stroke="currentColor"
-                          className="w-6 h-6"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
                           />
                         </svg>
                         View
@@ -209,4 +192,4 @@ export function Users() {
   );
 }
 
-export default Users;
+export default Loggers;
