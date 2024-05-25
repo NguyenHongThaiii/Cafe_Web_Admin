@@ -211,23 +211,18 @@ function CreateBlog(props) {
         }
       }
       await blogsApi.createProduct(formData);
-      toast("Tạo thành công");
+      toast("Create Blog Successfully");
+      navigate("/dashboard/blogs");
     } catch (error) {
-      console.log(error);
-      toast.error(error?.message || "Có lỗi xảy ra xin hãy thử lại sau.");
+      toast.error(error?.message || "Something went wrong!");
     }
-    navigate("/");
   };
 
   return (
     <LayoutUser>
       <div className="flex justify-center ">
         <div className=" shadow-[0_2px_8px_rgba(0,0,0,.15)] bg-white lg:px-5 px-3 py-3  xs:px-2 m-2 w-[928px] rounded-md mb-0 xs:mb-20">
-          <p className="font-medium text-[28px]">Thêm địa điểm</p>
-          <p className="text-[14px] mb-3">
-            Những quán cafe yêu thích của bạn chưa có trên Toidicafe.vn? Chia sẻ
-            với cộng đồng ngay!
-          </p>
+          <p className="font-medium text-[28px]">Add Blog</p>
           <form onSubmit={handleSubmit(handleOnSubmit)}>
             <BasicInfor
               control={control}
@@ -248,13 +243,15 @@ function CreateBlog(props) {
             <ImageFrame onChange={handleOnChange} error={error} />
             <button
               type="submit"
-              className={`text-white text-xl mt-5 w-full h-10 px-5 rounded-lg bg-[rgb(238,0,3)] font-semibold  lg:hover:bg-[#be0129] transition-all duration-300
+              className={`text-white text-xl mt-5 w-full h-10 px-5 rounded-lg bg-[rgb(238,0,3)] font-semibold  hover:bg-[#be0129] transition-all duration-300
                 ${
-                  formState.isSubmitting ? "bg-gray-500" : "  "
+                  formState.isSubmitting
+                    ? "bg-gray-500 hover:bg-gray-500"
+                    : "  "
                 }                `}
               disabled={formState.isSubmitting}
             >
-              + Thêm địa điểm
+              + Add Blog
             </button>
           </form>
         </div>

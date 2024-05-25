@@ -1,5 +1,6 @@
 import InputControl from "@/Form-Control/Input-Control";
 import InputControlCommon from "@/Form-Control/Input-Control-Common";
+import areasApi from "@/api/areasApi";
 import blogsApi from "@/api/blogsApi";
 import Pagination from "@/widgets/layout/pagination";
 import {
@@ -16,7 +17,7 @@ import debounce from "lodash.debounce";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-export function Blogs() {
+export function Areas() {
   const { control, handleSubmit, setValue, formState } = useForm({
     mode: "onChange",
   });
@@ -29,8 +30,8 @@ export function Blogs() {
 
   useEffect(() => {
     (async () => {
-      const data = await blogsApi.getAll(filters);
-      const count = await blogsApi.getCount({ ...filters, page: 0 });
+      const data = await areasApi.getAll(filters);
+      const count = await areasApi.getCount({ ...filters, page: 0 });
       setCount(count);
       setState(data);
     })();
@@ -50,11 +51,11 @@ export function Blogs() {
           className="mb-8 p-6 flex justify-between items-center"
         >
           <Typography variant="h6" color="white">
-            Blogs Table
+            Areas Table
           </Typography>
-          <Typography as="a" href="/dashboard/create-blog">
+          <Typography as="a" href="/dashboard/create-area">
             <Button color="white" size="sm">
-              Create Blog
+              Create Area
             </Button>
           </Typography>
         </CardHeader>
@@ -72,7 +73,7 @@ export function Blogs() {
               focus
               id="name"
               type="name"
-              placeholder="ex: Sunny Cafe"
+              placeholder="ex: Cầu giấy "
             />
           </form>
         </div>
@@ -82,11 +83,10 @@ export function Blogs() {
               <tr>
                 {[
                   "name",
-                  "description",
-                  "price",
                   "slug",
-                  "phone",
                   "status",
+                  "createdAt",
+                  "updatedAt",
                   "action",
                 ].map((el) => (
                   <th
@@ -104,22 +104,18 @@ export function Blogs() {
               </tr>
             </thead>
             <tbody>
-              {state.map((blog, key) => {
+              {state.map((area, key) => {
                 const className = `py-3 px-5 ${
                   key === state.length - 1 ? "" : "border-b border-blue-gray-50"
                 }`;
 
                 return (
-                  <tr key={blog?.id}>
+                  <tr key={area?.id}>
                     <td className={className}>
                       <div className="flex items-center gap-4">
                         <Avatar
-                          src={
-                            blog?.listImage?.length > 0
-                              ? blog?.listImage[0]?.url
-                              : ""
-                          }
-                          alt={blog?.name}
+                          src={area?.image?.url}
+                          alt={area?.name}
                           size="sm"
                           variant="rounded"
                         />
@@ -129,50 +125,39 @@ export function Blogs() {
                             color="blue-gray"
                             className="font-semibold"
                           >
-                            {blog?.name}
-                          </Typography>
-                          <Typography className="text-xs font-normal text-blue-gray-500">
-                            {blog?.location}
+                            {area?.name}
                           </Typography>
                         </div>
                       </div>
                     </td>
                     <td className={className}>
                       <Typography className="text-xs font-semibold text-blue-gray-600">
-                        {blog?.description}
+                        {area?.slug}
                       </Typography>
-                      {/* <Typography className="text-xs font-normal text-blue-gray-500">
-                          {"123"}
-                        </Typography> */}
                     </td>
 
                     <td className={className}>
-                      <Typography className="text-xs font-semibold text-blue-gray-600">
-                        {blog?.priceMin} - {blog?.priceMax}
-                      </Typography>
-                    </td>
-                    <td className={className}>
-                      <Typography className="text-xs font-semibold text-blue-gray-600">
-                        {blog?.slug}
-                      </Typography>
-                    </td>
-                    <td className={className}>
-                      <Typography className="text-xs font-semibold text-blue-gray-600">
-                        {blog?.phone}
-                      </Typography>
-                    </td>
-                    <td className={className}>
                       <Chip
                         variant="gradient"
-                        color={blog?.status != 0 ? "green" : "blue-gray"}
-                        value={blog?.status != 0 ? "active" : "inactive"}
+                        color={area?.status != 0 ? "green" : "blue-gray"}
+                        value={area?.status != 0 ? "active" : "inactive"}
                         className="py-0.5 px-2 text-[11px] font-medium w-fit"
                       />
                     </td>
                     <td className={className}>
+                      <Typography className="text-xs font-semibold text-blue-gray-600">
+                        {area?.createdAt}
+                      </Typography>
+                    </td>
+                    <td className={className}>
+                      <Typography className="text-xs font-semibold text-blue-gray-600">
+                        {area?.updatedAt}
+                      </Typography>
+                    </td>
+                    <td className={className}>
                       <Typography
                         as="a"
-                        href={`/dashboard/edit-place/${blog?.slug}`}
+                        href={`/dashboard/edit-area/${area?.slug}`}
                         className="text-xs font-semibold text-blue-gray-600 flex items-center gap-2 transition-all hover:bg-gray-300 p-1 rounded-md"
                       >
                         <svg
@@ -190,32 +175,6 @@ export function Blogs() {
                           />
                         </svg>
                         Edit
-                      </Typography>
-                      <Typography
-                        as="a"
-                        href="#"
-                        className="text-xs font-semibold text-blue-gray-600 flex items-center gap-2 mt-2 transition-all hover:bg-gray-300 p-1 rounded-md"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1.5}
-                          stroke="currentColor"
-                          className="w-6 h-6"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
-                          />
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                          />
-                        </svg>
-                        View
                       </Typography>
                     </td>
                   </tr>
@@ -238,4 +197,4 @@ export function Blogs() {
   );
 }
 
-export default Blogs;
+export default Areas;

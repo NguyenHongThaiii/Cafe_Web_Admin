@@ -6,6 +6,7 @@ import {
   Profile,
   Users,
   Loggers,
+  Areas,
 } from "@/pages/dashboard";
 import {
   HomeIcon,
@@ -46,6 +47,12 @@ export const routes = [
         name: "users",
         path: "/users",
         element: <Users />,
+      },
+      {
+        icon: <TableCellsIcon {...icon} />,
+        name: "areas",
+        path: "/areas",
+        element: <Areas />,
       },
       {
         icon: <TableCellsIcon {...icon} />,

@@ -66,7 +66,7 @@ export function Loggers() {
               name="createdAt"
               focus
               id="createdAt"
-              placeholder="21-12-2023 18:26:28"
+              placeholder="ex: 21-12-2023 18:26:28"
             />{" "}
           </form>
         </div>

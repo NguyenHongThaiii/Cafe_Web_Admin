@@ -1,9 +1,13 @@
 ## Page detail for each product
 
-## Page create for product
- 
-## Page edit for product
+feature delete and view detail
 
 ## Page profile
 
+feature delete and view detail
+
 ## Page logger
+
+feature delete and view detail
+
+## Page Kind Purpose Convenience

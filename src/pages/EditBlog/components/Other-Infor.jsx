@@ -41,8 +41,8 @@ function OtherInfor({
   }));
   return (
     <>
-      <p className="text-[21px] font-medium text-primary pb-2  border-b-[1px]">
-        Thông tin khác
+      <p className="text-[21px] font-medium text-[rgb(238,0,3)] pb-2  border-b-[1px]">
+        Other Info
       </p>
       <div>
         <div className="py-5 lg:px-4 flex flex-col gap-5 px-0">
@@ -52,8 +52,8 @@ function OtherInfor({
                 htmlFor="startTime"
                 className="lg:min-w-[150px] min-w-[75px] text-[14px]"
               >
-                Thời gian mở cửa{" "}
-                <span className="text-primary pl-1 font-bold">*</span>
+                Time Open
+                <span className="text-[rgb(238,0,3)] pl-1 font-bold">*</span>
               </label>
               <InputControlCommon
                 control={control}
@@ -68,8 +68,8 @@ function OtherInfor({
                 htmlFor="endTime"
                 className="min-w-[60px] text-[14px] mr-4"
               >
-                Đến:
-                <span className="text-primary pl-1 font-bold">*</span>
+                To:
+                <span className="text-[rgb(238,0,3)] pl-1 font-bold">*</span>
               </label>
               <InputControlCommon
                 control={control}
@@ -83,12 +83,12 @@ function OtherInfor({
         </div>
         <div className="flex items-center justify-between gap-10 px-4">
           {formState?.errors["startTime"] && (
-            <span className="block font-medium text-sm text-primary transition-all duration-150">
+            <span className="block font-medium text-sm text-[rgb(238,0,3)] transition-all duration-150">
               {formState.errors["startTime"]?.message}
             </span>
           )}
           {formState?.errors["endTime"] && (
-            <span className="block font-medium text-sm text-primary transition-all duration-150">
+            <span className="block font-medium text-sm text-[rgb(238,0,3)] transition-all duration-150">
               {formState.errors["endTime"]?.message}
             </span>
           )}
@@ -100,8 +100,8 @@ function OtherInfor({
                 htmlFor="priceMin"
                 className="lg:min-w-[150px] min-w-[75px] text-[14px]"
               >
-                Khoảng giá
-                <span className="text-primary pl-1 font-bold">*</span>
+                Price
+                <span className="text-[rgb(238,0,3)] pl-1 font-bold">*</span>
               </label>
               <InputControlCommon
                 control={control}
@@ -116,8 +116,8 @@ function OtherInfor({
                 htmlFor="priceMax"
                 className="min-w-[60px] text-[14px] mr-4"
               >
-                Đến:
-                <span className="text-primary pl-1 font-bold">*</span>
+                To:
+                <span className="text-[rgb(238,0,3)] pl-1 font-bold">*</span>
               </label>
               <InputControlCommon
                 control={control}
@@ -131,12 +131,12 @@ function OtherInfor({
         </div>
         <div className="flex items-center justify-between gap-10 px-4">
           {formState?.errors["priceMin"] && (
-            <span className="block font-medium text-sm text-primary transition-all duration-150">
+            <span className="block font-medium text-sm text-[rgb(238,0,3)] transition-all duration-150">
               {formState.errors["priceMin"]?.message}
             </span>
           )}
           {formState?.errors["priceMax"] && (
-            <span className="block font-medium text-sm text-primary transition-all duration-150">
+            <span className="block font-medium text-sm text-[rgb(238,0,3)] transition-all duration-150">
               {formState.errors["priceMax"]?.message}
             </span>
           )}
@@ -148,7 +148,7 @@ function OtherInfor({
                 htmlFor="latitude"
                 className="lg:min-w-[150px] min-w-[75px] text-[14px] "
               >
-                Vĩ độ
+                Latitude
               </label>
               <InputControlCommon
                 control={control}
@@ -163,7 +163,7 @@ function OtherInfor({
                 htmlFor="longitude"
                 className="min-w-[60px] text-[14px] mr-4"
               >
-                Kinh độ
+                Longitude
               </label>
               <InputControlCommon
                 control={control}
@@ -177,12 +177,12 @@ function OtherInfor({
         </div>
         <div className="flex items-center justify-between gap-10 px-4">
           {error?.latitude && (
-            <span className="block font-medium text-sm text-primary transition-all duration-150">
+            <span className="block font-medium text-sm text-[rgb(238,0,3)] transition-all duration-150">
               {error?.latitude}
             </span>
           )}
           {error?.longitude && (
-            <span className="block font-medium text-sm text-primary transition-all duration-150">
+            <span className="block font-medium text-sm text-[rgb(238,0,3)] transition-all duration-150">
               {error?.longitude}
             </span>
           )}
@@ -193,8 +193,8 @@ function OtherInfor({
               htmlFor="kind_id"
               className="lg:min-w-[150px] min-w-[75px] text-[14px]"
             >
-              Kiểu quán
-              <span className="text-primary pl-1 font-bold">*</span>
+              Kind
+              <span className="text-[rgb(238,0,3)] pl-1 font-bold">*</span>
             </label>
             <SelectControl
               control={control}
@@ -207,7 +207,7 @@ function OtherInfor({
           </div>
         </div>
         {formState?.errors["kind_id"] && (
-          <span className="block font-medium text-sm text-primary transition-all duration-150">
+          <span className="block font-medium text-sm text-[rgb(238,0,3)] transition-all duration-150">
             {formState.errors["kind_id"]?.message}
           </span>
         )}
@@ -217,8 +217,8 @@ function OtherInfor({
               htmlFor="convenience_id"
               className="lg:min-w-[150px] min-w-[75px] text-[14px]"
             >
-              Tiện ích
-              <span className="text-primary pl-1 font-bold">*</span>
+              Convenience
+              <span className="text-[rgb(238,0,3)] pl-1 font-bold">*</span>
             </label>
             <SelectControl
               control={control}
@@ -233,7 +233,7 @@ function OtherInfor({
           </div>
         </div>
         {formState?.errors["convenience_id"] && (
-          <span className="block font-medium text-sm text-primary transition-all duration-150">
+          <span className="block font-medium text-sm text-[rgb(238,0,3)] transition-all duration-150">
             {formState.errors["convenience_id"]?.message}
           </span>
         )}
@@ -243,8 +243,8 @@ function OtherInfor({
               htmlFor="purpose_id"
               className="lg:min-w-[150px] min-w-[75px] text-[14px]"
             >
-              Mục đích
-              <span className="text-primary pl-1 font-bold">*</span>
+              Purpose
+              <span className="text-[rgb(238,0,3)] pl-1 font-bold">*</span>
             </label>
             <SelectControl
               control={control}
@@ -259,7 +259,7 @@ function OtherInfor({
           </div>
         </div>{" "}
         {formState?.errors["purpose_id"] && (
-          <span className="block font-medium text-sm text-primary transition-all duration-150">
+          <span className="block font-medium text-sm text-[rgb(238,0,3)] transition-all duration-150">
             {formState.errors["purpose_id"]?.message}
           </span>
         )}

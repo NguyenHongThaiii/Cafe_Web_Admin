@@ -10,34 +10,24 @@ import BasicInfor from "../components/Basic-Infor";
 import ImageFrame from "../components/Image-Frame";
 import usersApi from "@/api/usersApi";
 import rolesApi from "@/api/rolesApi";
+import areasApi from "@/api/areasApi";
 import { toast } from "react-toastify";
 const schema = yup.object({
   name: yup
-    .string("Vui lòng nhập tên quán.")
+    .string("Please enter your name area")
     .trim()
-    .max(50, "Tên quán không được vượt quá 50 ký tự")
-    .required("Vui lòng nhập tên quán"),
-  // password: yup
-  //   .string("Vui lòng nhập tên quán.")
-  //   .trim()
-  //   .min(6, "Tên quán không được vượt quá 6 ký tự")
-  //   .max(20, "Tên quán không được vượt quá 50 ký tự")
-  //   .required("Vui lòng nhập tên quán"),
-  roles: yup
-    .string("Vui lòng chọn kiểu quán")
-    .trim()
-    .required("Vui lòng chọn kiểu quán"),
+    .max(50, "Max length is 50 characters")
+    .required("Please enter your name area"),
 });
-EditUserPage.propTypes = {};
+EditAreaPage.propTypes = {};
 
-function EditUserPage(props) {
+function EditAreaPage(props) {
   const location = useLocation();
-  const slug = location.pathname.split("/")[3];
   const user = useSelector((state) => state.auth.current);
   const navigate = useNavigate();
   const [values, setValues] = useState({});
   const [roles, setRoles] = useState([]);
-
+  const slug = location.pathname.split("/")[3];
   const [error, setError] = useState({});
   const [state, setState] = useState({});
   const { control, handleSubmit, setValue, formState } = useForm({
@@ -48,15 +38,10 @@ function EditUserPage(props) {
   });
   useEffect(() => {
     (async () => {
-      const roleData = await rolesApi.getAll();
-      const userData = await usersApi.getBySlug(slug);
-      setValue("name", userData?.name);
-      setValue("address", userData?.address);
-      setValue("email", userData?.email);
-      setValue("phone", userData?.phone);
-      setValue("roles", userData?.roles[0]?.id);
-      setState(userData);
-      setRoles(roleData);
+      const data = await areasApi.getBySlug(slug);
+      setValue("name", data?.name);
+      setValue("imageFile", data?.image?.url);
+      setState(data);
     })();
   }, [location, location.pathname]);
   const handleOnChange = (value) => {
@@ -64,18 +49,16 @@ function EditUserPage(props) {
   };
   const handleOnSubmit = async (data) => {
     data = { ...data, ...values };
-    if (+data?.roles === 1) data.roles = [1, 2];
-    else data.roles = [1];
     try {
-      await usersApi.updateUser(state?.slug, data);
-      if (values?.avatar) {
-        const formData = new FormData();
-        formData.append("avatar", values?.avatar);
-        await usersApi.uploadAvatar(state?.slug, formData);
+      const formdata = new FormData();
+      formdata.append("name", data?.name);
+      formdata.append("status", 1);
+      if (data.imageFile instanceof File) {
+        formdata.append("imageFile", data?.imageFile);
       }
-      toast("Edit User Successfully");
-
-      navigate("/dashboard/users");
+      await areasApi.update(state?.id, formdata);
+      toast("Edit Area Successfully");
+      navigate("/dashboard/areas");
     } catch (error) {
       toast.error(error?.message || "Something went wrong!");
     }
@@ -85,19 +68,18 @@ function EditUserPage(props) {
     <LayoutUser>
       <div className="flex justify-center ">
         <div className=" shadow-[0_2px_8px_rgba(0,0,0,.15)] bg-white lg:px-5 px-3 py-3  xs:px-2 m-2 w-[928px] rounded-md mb-0 xs:mb-20">
-          <p className="font-medium text-[28px] mb-3">Edit User</p>
+          <p className="font-medium text-[28px] mb-3">Add Area</p>
+
           <form onSubmit={handleSubmit(handleOnSubmit)}>
             <BasicInfor
               control={control}
               onChange={handleOnChange}
-              roles={roles}
               formState={formState}
-              errorMessage={error?.description}
             />
             <ImageFrame
               onChange={handleOnChange}
               error={error}
-              avatar={state?.image?.url}
+              image={state?.image?.url}
             />
             <button
               type="submit"
@@ -109,7 +91,7 @@ function EditUserPage(props) {
                 }                `}
               disabled={formState.isSubmitting}
             >
-              + Edit User
+              + Edit Area
             </button>
           </form>
         </div>
@@ -118,4 +100,4 @@ function EditUserPage(props) {
   );
 }
 
-export default EditUserPage;
+export default EditAreaPage;
