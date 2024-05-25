@@ -10,8 +10,8 @@ ContactInfor.propTypes = {
 function ContactInfor({ control = null, formState = null }) {
   return (
     <>
-      <p className="text-[21px] font-medium text-primary pb-2  border-b-[1px]">
-        Thông tin liên hệ
+      <p className="text-[21px] font-medium text-[rgb(238,0,3)] pb-2  border-b-[1px]">
+        Contact info
       </p>
       <div>
         <div className="py-5 lg:px-4 flex flex-col gap-5 px-0">

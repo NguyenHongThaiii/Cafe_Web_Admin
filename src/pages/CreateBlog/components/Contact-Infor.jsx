@@ -11,7 +11,7 @@ function ContactInfor({ control = null, formState = null }) {
   return (
     <>
       <p className="text-[21px] font-medium text-[rgb(238,0,3)] pb-2  border-b-[1px]">
-        Thông tin liên hệ
+        Contact info
       </p>
       <div>
         <div className="py-5 lg:px-4 px-0 flex flex-col gap-5 ">

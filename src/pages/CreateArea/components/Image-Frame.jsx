@@ -5,10 +5,9 @@ import { FaCamera } from "react-icons/fa";
 ImageFrame.propTypes = {
   onChange: PropTypes.func,
   error: PropTypes.object,
-  avatar: PropTypes.string,
 };
 
-function ImageFrame({ onChange = null, error = {}, avatar = "" }) {
+function ImageFrame({ onChange = null, error = {} }) {
   const [fileImages, setFileImages] = useState([]);
   const handleOnChangeImage = (e) => {
     const files = Array.from(e.target.files).map((item, index) => {
@@ -19,7 +18,7 @@ function ImageFrame({ onChange = null, error = {}, avatar = "" }) {
     });
     setFileImages((prev) => [...prev, ...files]);
     if (!onChange) return;
-    onChange({ avatar: arrayFiles[0] });
+    onChange({ imageFile: arrayFiles[0] });
   };
 
   return (
@@ -42,29 +41,19 @@ function ImageFrame({ onChange = null, error = {}, avatar = "" }) {
             />
           </div>
         ))}
-        {fileImages?.length === 0 && avatar && (
-          <div className="w-[104px] h-[104px]   opacity-80 hover:opacity-100 transition-all duration-300 cursor-pointer relative">
-            <div className="absolute inset-0  bg-[rgba(0,0,0,0.3) hover:bg-[rgba(0,0,0,0.5)] rounded-[10px] transition-all duration-300 z-10"></div>
-            <img
-              src={avatar}
-              alt={avatar}
-              className="w-full h-full object-cover rounded-[10px]"
-            />
-          </div>
-        )}
         <div className="mb-2 mr-2 text-sm rounded-[10px] w-[104px] h-[104px] border flex items-center justify-center">
           <label
-            htmlFor="avatar"
+            htmlFor="image"
             className="flex flex-col items-center justify-center cursor-pointer gap-y-2"
           >
             <FaCamera className="text-[20px]" />
-            <span>Add Avatar</span>
+            <span>Add Image</span>
           </label>
           <input
             onChange={handleOnChangeImage}
             type="file"
-            name="avatar"
-            id="avatar"
+            name="image"
+            id="image"
             className="hidden"
           />
         </div>

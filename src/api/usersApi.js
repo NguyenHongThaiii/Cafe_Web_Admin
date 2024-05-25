@@ -34,6 +34,10 @@ const usersApi = {
     const url = `/auth/users`;
     return axiosClient.get(url, { params });
   },
+  getCount(params) {
+    const url = `/auth/users/count`;
+    return axiosClient.get(url, { params });
+  },
   uploadAvatar(slug, body) {
     const url = `/auth/avatar/${slug}`;
     return axiosClient.post(url, body, {

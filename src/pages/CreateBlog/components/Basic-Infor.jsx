@@ -27,7 +27,7 @@ function BasicInfor({
   return (
     <>
       <p className="text-[21px] font-medium text-[rgb(238,0,3)] pb-2  border-b-[1px]">
-        Thông tin cơ bản
+        Basic Informations
       </p>
       <div>
         <div className="py-5 lg:px-4 flex flex-col gap-5 px-0">
@@ -36,7 +36,7 @@ function BasicInfor({
               htmlFor="name"
               className=" min-w-[80px] text-[14px] lg:mr-16 mr-3"
             >
-              Tên quán
+              Name
               <span className="text-[rgb(238,0,3)] pl-1 font-bold">*</span>
             </label>
             <InputControlCommon
@@ -57,7 +57,7 @@ function BasicInfor({
               htmlFor="area_id"
               className=" min-w-[80px] text-[14px] lg:mr-16 mr-3"
             >
-              Khu vực
+              Area
               <span className="text-[rgb(238,0,3)] pl-1 font-bold">*</span>
             </label>
             <SelectControl
@@ -78,7 +78,7 @@ function BasicInfor({
               htmlFor="location"
               className=" min-w-[80px] text-[14px] lg:mr-16 mr-3"
             >
-              Địa chỉ
+              Address
               <span className="text-[rgb(238,0,3)] pl-1 font-bold">*</span>
             </label>
             <InputControlCommon
@@ -99,7 +99,7 @@ function BasicInfor({
               htmlFor="description"
               className=" min-w-[80px] text-[14px] lg:mr-16 mr-3"
             >
-              Giới thiệu
+              Description
               <span className="text-[rgb(238,0,3)] pl-1 font-bold">*</span>
             </label>
             <TextareaCustomControl

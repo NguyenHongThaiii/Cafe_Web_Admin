@@ -38,7 +38,7 @@ function OtherInfor({
   return (
     <>
       <p className="text-[21px] font-medium text-[rgb(238,0,3)] pb-2  border-b-[1px]">
-        Thông tin khác
+        Other Info
       </p>
       <div>
         <div className="py-5 lg:px-4 flex  items-center px-0">
@@ -48,7 +48,7 @@ function OtherInfor({
                 htmlFor="startTime"
                 className="lg:min-w-[150px] min-w-[75px] lg:text-[14px] "
               >
-                Thời gian mở cửa{" "}
+                Time Open{" "}
                 <span className="text-[rgb(238,0,3)] pl-1 font-bold">*</span>
               </label>
               <InputControlCommon
@@ -64,7 +64,7 @@ function OtherInfor({
                 htmlFor="endTime"
                 className="min-w-[75px] lg:text-[14px]  lg:mr-4 mr-0"
               >
-                Đến:
+                To:
                 <span className="text-[rgb(238,0,3)] pl-1 font-bold">*</span>
               </label>
               <InputControlCommon
@@ -96,7 +96,7 @@ function OtherInfor({
                 htmlFor="priceMin"
                 className="lg:min-w-[150px] min-w-[75px] lg:text-[14px] "
               >
-                Khoảng giá
+                Price
                 <span className="text-[rgb(238,0,3)] pl-1 font-bold">*</span>
               </label>
               <InputControlCommon
@@ -112,7 +112,7 @@ function OtherInfor({
                 htmlFor="priceMax"
                 className="min-w-[75px] lg:text-[14px]  lg:mr-4 mr-0"
               >
-                Đến:
+                To:
                 <span className="text-[rgb(238,0,3)] pl-1 font-bold">*</span>
               </label>
               <InputControlCommon
@@ -144,7 +144,7 @@ function OtherInfor({
                 htmlFor="latitude"
                 className="lg:min-w-[150px] min-w-[75px] lg:text-[14px]  "
               >
-                Vĩ độ
+                Latitude
               </label>
               <InputControlCommon
                 control={control}
@@ -159,7 +159,7 @@ function OtherInfor({
                 htmlFor="longitude"
                 className="min-w-[75px] lg:text-[14px]  lg:mr-4 mr-0"
               >
-                Kinh độ
+                Longitude
               </label>
               <InputControlCommon
                 control={control}
@@ -189,7 +189,7 @@ function OtherInfor({
               htmlFor="kind_id"
               className="lg:min-w-[150px] min-w-[75px] lg:text-[14px] "
             >
-              Kiểu quán
+              Kind
               <span className="text-[rgb(238,0,3)] pl-1 font-bold">*</span>
             </label>
             <SelectControl
@@ -212,7 +212,7 @@ function OtherInfor({
               htmlFor="convenience_id"
               className="lg:min-w-[150px] min-w-[75px] lg:text-[14px] "
             >
-              Tiện ích
+              Convenience
               <span className="text-[rgb(238,0,3)] pl-1 font-bold">*</span>
             </label>
             <SelectControl
@@ -235,7 +235,7 @@ function OtherInfor({
               htmlFor="purpose_id"
               className="lg:min-w-[150px] min-w-[75px] lg:text-[14px] "
             >
-              Mục đích
+              Purpose
               <span className="text-[rgb(238,0,3)] pl-1 font-bold">*</span>
             </label>
             <SelectControl

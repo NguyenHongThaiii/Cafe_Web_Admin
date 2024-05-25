@@ -1,3 +1,4 @@
+import InputControlCommon from "@/Form-Control/Input-Control-Common";
 import usersApi from "@/api/usersApi";
 import Pagination from "@/widgets/layout/pagination";
 import {
@@ -8,9 +9,14 @@ import {
   Chip,
   Typography,
 } from "@material-tailwind/react";
+import debounce from "lodash.debounce";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
 export function Users() {
+  const { control, handleSubmit, setValue, formState } = useForm({
+    mode: "onChange",
+  });
   const [state, setState] = useState([]);
   const [count, setCount] = useState(0);
   const [filters, setFilters] = useState({
@@ -18,20 +24,22 @@ export function Users() {
     limit: 5,
   });
   useEffect(() => {
-    (async () => {
-      const count = await usersApi.getAll({ page: 0 });
-      setCount(count?.length);
-    })();
+    (async () => {})();
   }, []);
   useEffect(() => {
     (async () => {
       const users = await usersApi.getAll(filters);
+      const count = await usersApi.getCount({ ...filters, page: 0 });
+      setCount(count);
       setState(users);
     })();
   }, [filters, count]);
 
   const handlePageChange = (page) => {
     setFilters((prev) => ({ ...prev, page: page }));
+  };
+  const handleChangeInput = (data) => {
+    setFilters((prev) => ({ ...prev, page: 1, email: data?.email }));
   };
   return (
     <div className="mt-12 mb-8 flex flex-col gap-12">
@@ -50,6 +58,24 @@ export function Users() {
             </Button>
           </Typography> */}
         </CardHeader>
+        <div className="md:mr-4 flex items-center justify-end mb-4 px-4 lg:px-0">
+          <form
+            onChange={handleSubmit(debounce(handleChangeInput, 300))}
+            className="flex items-center"
+          >
+            <label htmlFor="search" className="w-[200px]">
+              Find By Name:
+            </label>
+            <InputControlCommon
+              control={control}
+              name="email"
+              focus
+              id="email"
+              type="email"
+              placeholder="ex: tranvotam123@gmail.com "
+            />
+          </form>
+        </div>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
           <table className="w-full min-w-[640px] table">
             <thead>

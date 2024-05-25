@@ -35,8 +35,8 @@ function ImageFrame({ onChange = null, error = {}, blog = {} }) {
   };
   return (
     <>
-      <p className="text-[21px] font-medium text-primary pb-2  border-b-[1px]">
-        Hình ảnh
+      <p className="text-[21px] font-medium text-[rgb(238,0,3)] pb-2  border-b-[1px]">
+        Image
       </p>
 
       <div className="mt-4 grid grid-cols-3 lg:grid-cols-7 gap-3 lg:px-4 px-0">
@@ -73,7 +73,7 @@ function ImageFrame({ onChange = null, error = {}, blog = {} }) {
             className="flex flex-col items-center justify-center cursor-pointer gap-y-2"
           >
             <FaCamera className="text-[20px]" />
-            <span>Thêm ảnh</span>
+            <span>Add Image</span>
           </label>
           <input
             onChange={handleOnChangeImage}
@@ -88,11 +88,11 @@ function ImageFrame({ onChange = null, error = {}, blog = {} }) {
       </div>
 
       {error?.image && (
-        <span className="block font-medium text-sm text-primary transition-all duration-150">
+        <span className="block font-medium text-sm text-[rgb(238,0,3)] transition-all duration-150">
           {error.image}
         </span>
       )}
-      <p className="text-[21px] font-medium text-primary pb-2  border-b-[1px] mt-5">
+      <p className="text-[21px] font-medium text-[rgb(238,0,3)] pb-2  border-b-[1px] mt-5">
         Menu
       </p>
       <div className="mt-4 grid grid-cols-3 lg:grid-cols-7 gap-3">
@@ -129,7 +129,7 @@ function ImageFrame({ onChange = null, error = {}, blog = {} }) {
             className="flex flex-col items-center justify-center cursor-pointer gap-y-2"
           >
             <FaCamera className="text-[20px]" />
-            <span>Thêm ảnh</span>
+            <span>Add Menu</span>
           </label>
           <input
             onChange={handleOnChangeMenu}
@@ -144,7 +144,7 @@ function ImageFrame({ onChange = null, error = {}, blog = {} }) {
       </div>
 
       {error?.menu && (
-        <span className="block font-medium text-sm text-primary transition-all duration-150">
+        <span className="block font-medium text-sm text-[rgb(238,0,3)] transition-all duration-150">
           {error.menu}
         </span>
       )}

@@ -20,7 +20,7 @@ function BasicInfor({ roles = [], control = null, formState = null }) {
   return (
     <>
       <p className="text-[21px] font-medium text-[rgb(238,0,3)] pb-2  border-b-[1px]">
-        Thông tin cơ bản
+        Basic Informations
       </p>
       <div>
         <div className="py-5 lg:px-4 flex flex-col gap-5 px-0">
@@ -29,7 +29,7 @@ function BasicInfor({ roles = [], control = null, formState = null }) {
               htmlFor="name"
               className=" min-w-[120px] text-[14px] lg:mr-16 mr-3"
             >
-              Tên người dùng
+              Username
               <span className="text-[rgb(238,0,3)] pl-1 font-bold">*</span>
             </label>
             <InputControlCommon
@@ -50,8 +50,7 @@ function BasicInfor({ roles = [], control = null, formState = null }) {
               htmlFor="address"
               className=" min-w-[120px] text-[14px] lg:mr-16 mr-3"
             >
-              Địa chỉ
-              <span className="text-[rgb(238,0,3)] pl-1 font-bold">*</span>
+              Address
             </label>
             <InputControlCommon
               control={control}
@@ -91,7 +90,6 @@ function BasicInfor({ roles = [], control = null, formState = null }) {
               className=" min-w-[120px] text-[14px] lg:mr-16 mr-3"
             >
               Password
-              <span className="text-[rgb(238,0,3)] pl-1 font-bold">*</span>
             </label>
             <PasswordControl control={control} name="password" id="password" />
           </div>
@@ -105,7 +103,7 @@ function BasicInfor({ roles = [], control = null, formState = null }) {
               htmlFor="roles"
               className=" min-w-[120px] text-[14px] lg:mr-16 mr-3"
             >
-              Quyền hạn
+              Role
               <span className="text-[rgb(238,0,3)] pl-1 font-bold">*</span>
             </label>
             <SelectControl
@@ -126,7 +124,7 @@ function BasicInfor({ roles = [], control = null, formState = null }) {
               htmlFor="phone"
               className=" min-w-[120px] text-[14px] lg:mr-16 mr-3"
             >
-              Số điện thoại
+              Phone
             </label>
             <InputControlCommon
               control={control}

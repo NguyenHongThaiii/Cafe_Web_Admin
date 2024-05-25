@@ -28,8 +28,8 @@ function BasicInfor({
   }));
   return (
     <>
-      <p className="text-[21px] font-medium text-primary pb-2  border-b-[1px]">
-        Thông tin cơ bản
+      <p className="text-[21px] font-medium text-[rgb(238,0,3)] pb-2  border-b-[1px]">
+        Basic Informations
       </p>
       <div>
         <div className="py-5 lg:px-4 flex flex-col gap-5 px-0">
@@ -38,8 +38,8 @@ function BasicInfor({
               htmlFor="name"
               className="min-w-[80px] text-[14px] lg:mr-16 mr-3"
             >
-              Tên quán
-              <span className="text-primary pl-1 font-bold">*</span>
+              Name
+              <span className="text-[rgb(238,0,3)] pl-1 font-bold">*</span>
             </label>
             <InputControlCommon
               control={control}
@@ -51,7 +51,7 @@ function BasicInfor({
             />
           </div>
           {formState?.errors["name"] && (
-            <span className="block font-medium text-sm text-primary transition-all duration-150">
+            <span className="block font-medium text-sm text-[rgb(238,0,3)] transition-all duration-150">
               {formState.errors["name"]?.message}
             </span>
           )}
@@ -60,8 +60,8 @@ function BasicInfor({
               htmlFor="area_id"
               className="min-w-[80px] text-[14px] lg:mr-16 mr-3"
             >
-              Khu vực
-              <span className="text-primary pl-1 font-bold">*</span>
+              Area
+              <span className="text-[rgb(238,0,3)] pl-1 font-bold">*</span>
             </label>
             <SelectControl
               control={control}
@@ -73,7 +73,7 @@ function BasicInfor({
             />
           </div>
           {formState?.errors["area_id"] && (
-            <span className="block font-medium text-sm text-primary transition-all duration-150">
+            <span className="block font-medium text-sm text-[rgb(238,0,3)] transition-all duration-150">
               {formState.errors["area_id"]?.message}
             </span>
           )}
@@ -82,8 +82,8 @@ function BasicInfor({
               htmlFor="location"
               className="min-w-[80px] text-[14px] lg:mr-16 mr-3"
             >
-              Địa chỉ
-              <span className="text-primary pl-1 font-bold">*</span>
+              Address
+              <span className="text-[rgb(238,0,3)] pl-1 font-bold">*</span>
             </label>
             <InputControlCommon
               control={control}
@@ -94,7 +94,7 @@ function BasicInfor({
             />
           </div>
           {formState?.errors["location"] && (
-            <span className="block font-medium text-sm text-primary transition-all duration-150">
+            <span className="block font-medium text-sm text-[rgb(238,0,3)] transition-all duration-150">
               {formState.errors["location"]?.message}
             </span>
           )}
@@ -103,8 +103,8 @@ function BasicInfor({
               htmlFor="description"
               className="min-w-[80px] text-[14px] lg:mr-16 mr-3"
             >
-              Giới thiệu
-              <span className="text-primary pl-1 font-bold">*</span>
+              Description
+              <span className="text-[rgb(238,0,3)] pl-1 font-bold">*</span>
             </label>
             <TextareaCustomControl
               control={control}
@@ -114,12 +114,11 @@ function BasicInfor({
               className="w-full mt-0"
               onChange={onChange}
               onKeyPress={null}
-              // defaultValue="12323"
               dValue={blog?.description}
             />
           </div>
           {errorMessage && (
-            <span className="block font-medium text-sm text-primary transition-all duration-150">
+            <span className="block font-medium text-sm text-[rgb(238,0,3)] transition-all duration-150">
               {errorMessage}
             </span>
           )}

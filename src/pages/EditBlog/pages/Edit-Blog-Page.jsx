@@ -104,7 +104,6 @@ function EditBlogPage(props) {
     (async () => {
       try {
         const blog = await blogsApi.getBySlug(slug || "");
-        console.log(blog);
         if (!blog?.id) {
           navigate("/not-found");
           return;
@@ -268,18 +267,18 @@ function EditBlogPage(props) {
         }
       }
       await blogsApi.updateProduct(state?.blog?.id, formData);
-      toast("Chỉnh sửa thành công");
-      navigate(`/place/${state?.blog?.slug}`);
+      toast("Edit Blog Successfully");
+      navigate(`/dashboard/blogs`);
     } catch (error) {
       console.log(error);
-      toast.error(error?.message || "Có lỗi xảy ra xin hãy thử lại sau.");
+      toast.error(error?.message || "Something went wrong!");
     }
   };
   return (
     <LayoutUser>
       <div className="flex justify-center ">
         <div className=" shadow-[0_2px_8px_rgba(0,0,0,.15)] bg-white px-5 py-3  xs:px-2 m-2 w-[928px] rounded-md mb-0 xs:mb-20">
-          <p className="font-medium text-[28px]">Chỉnh sửa địa điểm</p>
+          <p className="font-medium text-[28px]">Edit Blog</p>
           <form onSubmit={handleSubmit(handleOnSubmit)}>
             <BasicInfor
               control={control}
@@ -307,11 +306,13 @@ function EditBlogPage(props) {
             />
             <button
               type="submit"
-              className={`text-white text-xl mt-5 w-full h-10 px-5 rounded-lg bg-[rgb(238,0,3)] font-semibold  lg:hover:bg-[#be0129] transition-all duration-300
-            ${formState.isSubmitting ? "bg-gray-500" : "  "}                `}
+              className={`text-white text-xl mt-5 w-full h-10 px-5 rounded-lg bg-[rgb(238,0,3)] font-semibold  hover:bg-[#be0129] transition-all duration-300
+            ${
+              formState.isSubmitting ? "bg-gray-500 hover:bg-gray-500" : "  "
+            }                `}
               disabled={formState.isSubmitting}
             >
-              + Chỉnh sửa địa điểm
+              + Edit Blog
             </button>
           </form>
         </div>
