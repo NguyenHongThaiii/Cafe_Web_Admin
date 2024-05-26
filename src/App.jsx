@@ -14,6 +14,12 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
+import CreateKindPage from "@/pages/CreateKind/pages/Create-Kind-Page";
+import EditKindPage from "@/pages/EditKind/pages/Edit-Kind-Page";
+import CreateConveniencePage from "@/pages/CreateConvenience/pages/Create-Convenience-Page";
+import EditConveniencePage from "@/pages/EditConvenience/pages/Edit-Convenience-Page";
+import CreatePurposePage from "@/pages/CreatePurpose/pages/Create-Purpose-Page";
+import EditPurposePage from "@/pages/EditPurpose/pages/Edit-Purpose-Page";
 
 function App() {
   const navigate = useNavigate();
@@ -30,10 +36,25 @@ function App() {
       <Route path="/dashboard/*" element={<Dashboard />} />
       <Route path="/dashboard/create-blog" element={<CreateBlog />} />
       <Route path="/dashboard/create-area" element={<CreateAreaPage />} />
-      <Route path="/dashboard/edit-user/:slug" element={<EditUserPage />} />
+      <Route path="/dashboard/create-kind" element={<CreateKindPage />} />
+      <Route path="/dashboard/create-purpose" element={<CreatePurposePage />} />
+      <Route
+        path="/dashboard/create-convenience"
+        element={<CreateConveniencePage />}
+      />
       <Route path="/auth/*" element={<Auth />} />
+      <Route path="/dashboard/edit-user/:slug" element={<EditUserPage />} />
       <Route path="/dashboard/edit-place/:name" element={<EditBlogPage />} />
       <Route path="/dashboard/edit-area/:name" element={<EditAreaPage />} />
+      <Route path="/dashboard/edit-kind/:name" element={<EditKindPage />} />
+      <Route
+        path="/dashboard/edit-purpose/:name"
+        element={<EditPurposePage />}
+      />
+      <Route
+        path="/dashboard/edit-convenience/:name"
+        element={<EditConveniencePage />}
+      />
 
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>

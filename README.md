@@ -11,3 +11,5 @@ feature delete and view detail
 feature delete and view detail
 
 ## Page Kind Purpose Convenience
+
+transform vn to eng conent

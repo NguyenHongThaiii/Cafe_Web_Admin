@@ -3,15 +3,13 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 // import LayoutUser from "../../../components/Layout/Layout-User";
+import conveniencesApi from "@/api/conveniencesApi";
 import LayoutUser from "@/widgets/layout/layout-user";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import BasicInfor from "../components/Basic-Infor";
 import ImageFrame from "../components/Image-Frame";
-import usersApi from "@/api/usersApi";
-import rolesApi from "@/api/rolesApi";
-import areasApi from "@/api/areasApi";
-import { toast } from "react-toastify";
 const schema = yup.object({
   name: yup
     .string("Please enter your name area")
@@ -19,9 +17,9 @@ const schema = yup.object({
     .max(50, "Max length is 50 characters")
     .required("Please enter your name area"),
 });
-CreateAreaPage.propTypes = {};
+CreateConveniencePage.propTypes = {};
 
-function CreateAreaPage(props) {
+function CreateConveniencePage(props) {
   const navigate = useNavigate();
   const [values, setValues] = useState({});
   const [error, setError] = useState({});
@@ -48,9 +46,9 @@ function CreateAreaPage(props) {
       formdata.append("name", data?.name);
       formdata.append("status", 1);
       formdata.append("imageFile", data?.imageFile);
-      await areasApi.create(formdata);
-      toast("Create Area Successfully");
-      navigate("/dashboard/areas");
+      await conveniencesApi.create(formdata);
+      toast("Create Convenience Successfully");
+      navigate("/dashboard/conveniences");
     } catch (error) {
       console.log(error?.message);
       toast.error(error?.message || "Something went wrong!");
@@ -61,7 +59,7 @@ function CreateAreaPage(props) {
     <LayoutUser>
       <div className="flex justify-center ">
         <div className=" shadow-[0_2px_8px_rgba(0,0,0,.15)] bg-white lg:px-5 px-3 py-3  xs:px-2 m-2 w-[928px] rounded-md mb-0 xs:mb-20">
-          <p className="font-medium text-[28px] mb-3">Add Area</p>
+          <p className="font-medium text-[28px] mb-3">Add Convenience</p>
 
           <form onSubmit={handleSubmit(handleOnSubmit)}>
             <BasicInfor
@@ -80,7 +78,7 @@ function CreateAreaPage(props) {
                 }                `}
               disabled={formState.isSubmitting}
             >
-              + Add Area
+              + Add Convenience
             </button>
           </form>
         </div>
@@ -89,4 +87,4 @@ function CreateAreaPage(props) {
   );
 }
 
-export default CreateAreaPage;
+export default CreateConveniencePage;

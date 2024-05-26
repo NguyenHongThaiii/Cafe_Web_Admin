@@ -57,7 +57,8 @@ export function Configurator() {
 
   React.useEffect(() => {
     const stars = fetch(
-      "https://api.github.com/repos/creativetimofficial/material-tailwind-dashboard-react"
+      // "https://api.github.com/repos/creativetimofficial/material-tailwind-dashboard-react"
+      "https://api.github.com/repos/NguyenHongThaiii/Cafe_Web_Admin"
     )
       .then((response) => response.json())
       .then((data) => setStars(formatNumber(data.stargazers_count, 1)));
@@ -148,33 +149,17 @@ export function Configurator() {
           <hr />
           <div className="my-8 flex flex-col gap-4">
             <a
-              href="https://www.creative-tim.com/product/material-tailwind-dashboard-react?rel=mtdr"
+              href="https://github.com/NguyenHongThaiii/Cafe_Web_Admin.git"
               target="_black"
             >
               <Button variant="gradient" fullWidth>
                 Free Download
               </Button>
             </a>
-            <a
-              href="https://www.material-tailwind.com/docs/react/installation?rel=mtdr"
-              target="_black"
-            >
-              <Button variant="outlined" color="blue-gray" fullWidth>
-                View Documentation
-              </Button>
-            </a>
-            <a
-              href="https://www.material-tailwind.com/blocks/react?rel=mtdr"
-              target="_black"
-            >
-              <Button variant="outlined" color="blue-gray" fullWidth>
-                Material Tailwind PRO
-              </Button>
-            </a>
           </div>
           <a
             className="mx-auto flex items-center justify-center gap-2"
-            href="https://github.com/creativetimofficial/material-tailwind-dashboard-react"
+            href="https://github.com/NguyenHongThaiii/Cafe_Web_Admin.git"
             target="_blank"
             rel="noreferrer"
           >
@@ -211,17 +196,11 @@ export function Configurator() {
             Thank you for sharing ❤️
           </Typography>
           <div className="mt-4 flex justify-center gap-2">
-            <Button
-              variant="gradient"
-              className="flex items-center gap-2"
-            >
+            <Button variant="gradient" className="flex items-center gap-2">
               <i className="fa-brands fa-twitter text-white" />
               Tweet
             </Button>
-            <Button
-              variant="gradient"
-              className="flex items-center gap-2"
-            >
+            <Button variant="gradient" className="flex items-center gap-2">
               <i className="fa-brands fa-facebook text-white" />
               Share
             </Button>
