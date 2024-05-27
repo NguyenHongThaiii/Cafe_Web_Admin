@@ -29,6 +29,10 @@ const conveniencesApi = {
       },
     });
   },
+  delete(id) {
+    const url = `/conveniences/id/${id}`;
+    return axiosClient.delete(url);
+  },
 };
 
 export default conveniencesApi;

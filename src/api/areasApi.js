@@ -29,6 +29,9 @@ const areasApi = {
       },
     });
   },
+  delete(id) {
+    const url = `/areas/id/${id}`;
+    return axiosClient.delete(url);
+  },
 };
-
 export default areasApi;

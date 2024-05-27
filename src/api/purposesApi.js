@@ -29,6 +29,10 @@ const purposesApi = {
       },
     });
   },
+  delete(id) {
+    const url = `/purposes/id/${id}`;
+    return axiosClient.delete(url);
+  },
 };
 
 export default purposesApi;

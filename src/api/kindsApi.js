@@ -29,6 +29,10 @@ const kindsApi = {
       },
     });
   },
+  delete(id) {
+    const url = `/kinds/id/${id}`;
+    return axiosClient.delete(url);
+  },
 };
 
 export default kindsApi;
