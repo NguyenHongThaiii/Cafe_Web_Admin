@@ -12,16 +12,18 @@ import usersApi from "@/api/usersApi";
 import rolesApi from "@/api/rolesApi";
 import areasApi from "@/api/areasApi";
 import { toast } from "react-toastify";
+import kindsApi from "@/api/kindsApi";
+import purposesApi from "@/api/purposesApi";
 const schema = yup.object({
   name: yup
-    .string("Please enter your name area")
+    .string("Please enter your name kind")
     .trim()
     .max(50, "Max length is 50 characters")
-    .required("Please enter your name area"),
+    .required("Please enter your name kind"),
 });
-CreateAreaPage.propTypes = {};
+CreatePurposePage.propTypes = {};
 
-function CreateAreaPage(props) {
+function CreatePurposePage(props) {
   const navigate = useNavigate();
   const [values, setValues] = useState({});
   const [error, setError] = useState({});
@@ -48,9 +50,9 @@ function CreateAreaPage(props) {
       formdata.append("name", data?.name);
       formdata.append("status", 1);
       formdata.append("imageFile", data?.imageFile);
-      await areasApi.create(formdata);
-      toast("Create Area Successfully");
-      navigate("/dashboard/areas");
+      await purposesApi.create(formdata);
+      toast("Create Purpose Successfully");
+      navigate("/dashboard/purposes");
     } catch (error) {
       console.log(error?.message);
       toast.error(error?.message || "Something went wrong!");
@@ -61,7 +63,7 @@ function CreateAreaPage(props) {
     <LayoutUser>
       <div className="flex justify-center ">
         <div className=" shadow-[0_2px_8px_rgba(0,0,0,.15)] bg-white lg:px-5 px-3 py-3  xs:px-2 m-2 w-[928px] rounded-md mb-0 xs:mb-20">
-          <p className="font-medium text-[28px] mb-3">Add Area</p>
+          <p className="font-medium text-[28px] mb-3">Add Purpose</p>
 
           <form onSubmit={handleSubmit(handleOnSubmit)}>
             <BasicInfor
@@ -80,7 +82,7 @@ function CreateAreaPage(props) {
                 }                `}
               disabled={formState.isSubmitting}
             >
-              + Add Area
+              + Add Purpose
             </button>
           </form>
         </div>
@@ -89,4 +91,4 @@ function CreateAreaPage(props) {
   );
 }
 
-export default CreateAreaPage;
+export default CreatePurposePage;

@@ -3,15 +3,13 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 // import LayoutUser from "../../../components/Layout/Layout-User";
+import kindsApi from "@/api/kindsApi";
 import LayoutUser from "@/widgets/layout/layout-user";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import BasicInfor from "../components/Basic-Infor";
 import ImageFrame from "../components/Image-Frame";
-import usersApi from "@/api/usersApi";
-import rolesApi from "@/api/rolesApi";
-import areasApi from "@/api/areasApi";
-import { toast } from "react-toastify";
 const schema = yup.object({
   name: yup
     .string("Please enter your name area")
@@ -19,12 +17,17 @@ const schema = yup.object({
     .max(50, "Max length is 50 characters")
     .required("Please enter your name area"),
 });
-CreateAreaPage.propTypes = {};
+EditKindPage.propTypes = {};
 
-function CreateAreaPage(props) {
+function EditKindPage(props) {
+  const location = useLocation();
+  const user = useSelector((state) => state.auth.current);
   const navigate = useNavigate();
   const [values, setValues] = useState({});
+  const [roles, setRoles] = useState([]);
+  const slug = location.pathname.split("/")[3];
   const [error, setError] = useState({});
+  const [state, setState] = useState({});
   const { control, handleSubmit, setValue, formState } = useForm({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
@@ -32,27 +35,29 @@ function CreateAreaPage(props) {
     defaultValues: {},
   });
   useEffect(() => {
-    (async () => {})();
-  }, []);
+    (async () => {
+      const data = await kindsApi.getBySlug(slug);
+      setValue("name", data?.name);
+      setValue("imageFile", data?.image?.url);
+      setState(data);
+    })();
+  }, [location, location.pathname]);
   const handleOnChange = (value) => {
     setValues((prev) => ({ ...prev, ...value }));
   };
   const handleOnSubmit = async (data) => {
     data = { ...data, ...values };
-    if (!data?.imageFile) {
-      setError({ image: "Upload your image please!" });
-      return;
-    }
     try {
       const formdata = new FormData();
       formdata.append("name", data?.name);
       formdata.append("status", 1);
-      formdata.append("imageFile", data?.imageFile);
-      await areasApi.create(formdata);
-      toast("Create Area Successfully");
-      navigate("/dashboard/areas");
+      if (data.imageFile instanceof File) {
+        formdata.append("imageFile", data?.imageFile);
+      }
+      await kindsApi.update(state?.id, formdata);
+      toast("Edit Kind Successfully");
+      navigate("/dashboard/kinds");
     } catch (error) {
-      console.log(error?.message);
       toast.error(error?.message || "Something went wrong!");
     }
   };
@@ -69,7 +74,11 @@ function CreateAreaPage(props) {
               onChange={handleOnChange}
               formState={formState}
             />
-            <ImageFrame onChange={handleOnChange} error={error} />
+            <ImageFrame
+              onChange={handleOnChange}
+              error={error}
+              image={state?.image?.url}
+            />
             <button
               type="submit"
               className={`text-white text-xl mt-5 w-full h-10 px-5 rounded-lg bg-[rgb(238,0,3)] font-semibold  hover:bg-[#be0129] transition-all duration-300
@@ -80,7 +89,7 @@ function CreateAreaPage(props) {
                 }                `}
               disabled={formState.isSubmitting}
             >
-              + Add Area
+              + Edit Kind
             </button>
           </form>
         </div>
@@ -89,4 +98,4 @@ function CreateAreaPage(props) {
   );
 }
 
-export default CreateAreaPage;
+export default EditKindPage;

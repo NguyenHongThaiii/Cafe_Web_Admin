@@ -1,7 +1,5 @@
-import InputControl from "@/Form-Control/Input-Control";
 import InputControlCommon from "@/Form-Control/Input-Control-Common";
-import areasApi from "@/api/areasApi";
-import blogsApi from "@/api/blogsApi";
+import purposesApi from "@/api/purposesApi";
 import Pagination from "@/widgets/layout/pagination";
 import {
   Avatar,
@@ -10,14 +8,13 @@ import {
   CardBody,
   CardHeader,
   Chip,
-  Input,
   Typography,
 } from "@material-tailwind/react";
 import debounce from "lodash.debounce";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-export function Areas() {
+export function Purposes() {
   const { control, handleSubmit, setValue, formState } = useForm({
     mode: "onChange",
   });
@@ -30,8 +27,8 @@ export function Areas() {
 
   useEffect(() => {
     (async () => {
-      const data = await areasApi.getAll(filters);
-      const count = await areasApi.getCount({ ...filters, page: 0 });
+      const data = await purposesApi.getAll(filters);
+      const count = await purposesApi.getCount({ ...filters, page: 0 });
       setCount(count);
       setState(data);
     })();
@@ -51,11 +48,11 @@ export function Areas() {
           className="mb-8 p-6 flex justify-between items-center"
         >
           <Typography variant="h6" color="white">
-            Areas Table
+            Purposes Table
           </Typography>
-          <Typography as="a" href="/dashboard/create-area">
+          <Typography as="a" href="/dashboard/create-purpose">
             <Button color="white" size="sm">
-              Create Area
+              Create Purpose
             </Button>
           </Typography>
         </CardHeader>
@@ -73,7 +70,7 @@ export function Areas() {
               focus
               id="name"
               type="name"
-              placeholder="ex: Cau giay "
+              placeholder="ex: Cho dau oto "
             />
           </form>
         </div>
@@ -159,7 +156,7 @@ export function Areas() {
                     <td className={className}>
                       <Typography
                         as="a"
-                        href={`/dashboard/edit-area/${area?.slug}`}
+                        href={`/dashboard/edit-purpose/${area?.slug}`}
                         className="text-xs font-semibold text-blue-gray-600 flex items-center gap-2 transition-all hover:bg-gray-300 p-1 rounded-md"
                       >
                         <svg
@@ -199,4 +196,4 @@ export function Areas() {
   );
 }
 
-export default Areas;
+export default Purposes;
