@@ -36,6 +36,10 @@ const blogsApi = {
     });
   },
   getCountReviewProduct(product) {},
+  delete(body) {
+    const url = "/products";
+    return axiosClient.delete(url, { data: body }, {});
+  },
 };
 
 export default blogsApi;

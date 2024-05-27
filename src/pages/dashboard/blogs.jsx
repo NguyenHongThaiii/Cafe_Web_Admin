@@ -15,7 +15,8 @@ import {
 import debounce from "lodash.debounce";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-
+import { Button as ButtonFB, Modal } from "flowbite-react";
+import { toast } from "react-toastify";
 export function Blogs() {
   const { control, handleSubmit, setValue, formState } = useForm({
     mode: "onChange",
@@ -26,7 +27,9 @@ export function Blogs() {
     page: 1,
     limit: 5,
   });
-
+  const [openModal, setOpenModal] = useState(false);
+  const [id, setId] = useState(null);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     (async () => {
       const data = await blogsApi.getAll(filters);
@@ -40,6 +43,27 @@ export function Blogs() {
   };
   const handleChangeInput = (data) => {
     setFilters((prev) => ({ ...prev, page: 1, name: data?.name }));
+  };
+  const handleDeleteBlog = async () => {
+    setLoading(true);
+    try {
+      if (id === null || id === undefined) {
+        toast.error("Something went wrong!");
+        setOpenModal(false);
+        return;
+      }
+      await blogsApi.delete({ productId: id?.blogId, userId: id?.userId });
+      setOpenModal(false);
+      setFilters((prev) => ({ ...prev }));
+      toast("Delete blog successfully");
+    } catch (error) {
+      if (error?.message?.includes("could not execute statement"))
+        toast.error("Product are still existing!");
+      else toast.error("Something went wrong!");
+    } finally {
+      setOpenModal(false);
+      setLoading(false);
+    }
   };
   return (
     <div className="mt-12 mb-8 flex flex-col gap-12">
@@ -217,6 +241,29 @@ export function Blogs() {
                         </svg>
                         View
                       </Typography>
+                      <Typography
+                        onClick={() => {
+                          setId({ blogId: blog?.id, userId: blog?.owner?.id });
+                          setOpenModal(true);
+                        }}
+                        className="cursor-pointer text-xs font-semibold text-blue-gray-600 flex items-center gap-2 transition-all hover:bg-gray-300 p-1 rounded-md"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="w-6 h-6"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M6 18 18 6M6 6l12 12"
+                          />
+                        </svg>
+                        Delete
+                      </Typography>
                     </td>
                   </tr>
                 );
@@ -234,6 +281,38 @@ export function Blogs() {
           />
         </div>
       </Card>
+      <Modal
+        show={openModal}
+        size="md"
+        onClose={() => setOpenModal(false)}
+        popup
+        className="bg-blue-gray-600 opacity-90"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+        id="test"
+      >
+        <Modal.Header />
+        <Modal.Body className="">
+          <div className="text-center ">
+            <h3 className="mb-5 text-lg font-bold   ">
+              Are you sure you want to delete this area?
+            </h3>
+            <div className="flex justify-center gap-4">
+              <Button
+                className={`${loading ? "bg-blue-gray-200" : "bg-red-900"}`}
+                onClick={handleDeleteBlog}
+                disabled={loading}
+              >
+                {"Yes, I'm sure"}
+              </Button>
+              <Button onClick={() => setOpenModal(false)}>No, cancel</Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }

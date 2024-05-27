@@ -8,11 +8,14 @@ import {
   CardHeader,
   Chip,
   Typography,
+  Button,
 } from "@material-tailwind/react";
 import debounce from "lodash.debounce";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-
+import { Modal } from "flowbite-react";
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 export function Users() {
   const { control, handleSubmit, setValue, formState } = useForm({
     mode: "onChange",
@@ -23,9 +26,11 @@ export function Users() {
     page: 1,
     limit: 5,
   });
-  useEffect(() => {
-    (async () => {})();
-  }, []);
+  const [openModal, setOpenModal] = useState(false);
+  const [id, setId] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const user = useSelector((state) => state.auth.current);
+
   useEffect(() => {
     (async () => {
       const users = await usersApi.getAll(filters);
@@ -40,6 +45,31 @@ export function Users() {
   };
   const handleChangeInput = (data) => {
     setFilters((prev) => ({ ...prev, page: 1, email: data?.email }));
+  };
+  const handleDeleteUser = async () => {
+    setLoading(true);
+    if (user?.id === id) {
+      toast.error("You are stil using this account!");
+      return;
+    }
+    try {
+      if (id === null || id === undefined) {
+        toast.error("Something went wrong!");
+        setOpenModal(false);
+        return;
+      }
+      await usersApi.delete(id);
+      setOpenModal(false);
+      setFilters((prev) => ({ ...prev }));
+      toast("Delete purpose successfully");
+    } catch (error) {
+      if (error?.message?.includes("could not execute statement"))
+        toast.error("Product are still existing!");
+      else toast.error("Something went wrong!");
+    } finally {
+      setOpenModal(false);
+      setLoading(false);
+    }
   };
   return (
     <div className="mt-12 mb-8 flex flex-col gap-12">
@@ -214,6 +244,29 @@ export function Users() {
                         </svg>
                         View
                       </Typography>
+                      <Typography
+                        onClick={() => {
+                          setId(user?.id);
+                          setOpenModal(true);
+                        }}
+                        className="cursor-pointer text-xs font-semibold text-blue-gray-600 flex items-center gap-2 transition-all hover:bg-gray-300 p-1 rounded-md"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="w-6 h-6"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M6 18 18 6M6 6l12 12"
+                          />
+                        </svg>
+                        Delete
+                      </Typography>
                     </td>
                   </tr>
                 );
@@ -231,6 +284,38 @@ export function Users() {
           />
         </div>
       </Card>
+      <Modal
+        show={openModal}
+        size="md"
+        onClose={() => setOpenModal(false)}
+        popup
+        className="bg-blue-gray-600 opacity-90"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+        id="test"
+      >
+        <Modal.Header />
+        <Modal.Body className="">
+          <div className="text-center ">
+            <h3 className="mb-5 text-lg font-bold   ">
+              Are you sure you want to delete this area?
+            </h3>
+            <div className="flex justify-center gap-4">
+              <Button
+                className={`${loading ? "bg-blue-gray-200" : "bg-red-900"}`}
+                onClick={handleDeleteUser}
+                disabled={loading}
+              >
+                {"Yes, I'm sure"}
+              </Button>
+              <Button onClick={() => setOpenModal(false)}>No, cancel</Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }

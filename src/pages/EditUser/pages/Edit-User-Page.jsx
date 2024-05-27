@@ -64,6 +64,15 @@ function EditUserPage(props) {
   };
   const handleOnSubmit = async (data) => {
     data = { ...data, ...values };
+    console.log(data);
+    if (
+      data?.roles === null ||
+      data?.roles === undefined ||
+      +data?.roles === 0
+    ) {
+      toast.error("Please choose your role!");
+      return;
+    }
     if (+data?.roles === 1) data.roles = [1, 2];
     else data.roles = [1];
     try {

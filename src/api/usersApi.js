@@ -50,6 +50,10 @@ const usersApi = {
     const url = `/auth/update/${slug}`;
     return axiosClient.patch(url, data);
   },
+  delete(id) {
+    const url = `/auth/users/id/${id}`;
+    return axiosClient.delete(url);
+  },
 };
 
 export default usersApi;
