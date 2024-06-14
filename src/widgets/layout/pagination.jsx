@@ -23,7 +23,7 @@ function Pagination({ itemsPerPage, data, onChange, count, page = 1 }) {
   };
   return (
     <ReactPaginate
-      forcePage={page - 1}
+      // forcePage={page - 1}
       className="pagination"
       breakLabel="..."
       nextLabel=">"
