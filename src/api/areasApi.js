@@ -1,5 +1,4 @@
 import axiosClient from "./axiosClient";
-
 const areasApi = {
   getAll(params) {
     const url = "/areas";
