@@ -1,32 +1,22 @@
-import { useLocation, Link } from "react-router-dom";
 import {
-  Navbar,
-  Typography,
-  Button,
-  IconButton,
-  Breadcrumbs,
-  Input,
-  Menu,
-  MenuHandler,
-  MenuList,
-  MenuItem,
-  Avatar,
-} from "@material-tailwind/react";
-import {
-  UserCircleIcon,
-  Cog6ToothIcon,
-  BellIcon,
-  ClockIcon,
-  CreditCardIcon,
-  Bars3Icon,
-} from "@heroicons/react/24/solid";
-import {
-  useMaterialTailwindController,
   setOpenConfigurator,
   setOpenSidenav,
+  useMaterialTailwindController,
 } from "@/context";
+import {
+  Bars3Icon,
+  Cog6ToothIcon,
+  UserCircleIcon,
+} from "@heroicons/react/24/solid";
+import {
+  Breadcrumbs,
+  Button,
+  IconButton,
+  Navbar,
+  Typography,
+} from "@material-tailwind/react";
 import { useSelector } from "react-redux";
-
+import { Link, useLocation } from "react-router-dom";
 export function DashboardNavbar() {
   const user = useSelector((state) => state.auth.current);
   const [controller, dispatch] = useMaterialTailwindController();
