@@ -89,6 +89,9 @@ export function DashboardNavbar() {
                 color="blue-gray"
                 className="hidden items-center gap-1 px-4 xl:flex normal-case"
               >
+                <Typography className="block antialiased tracking-normal font-sans text-xl font-semibold leading-snug text-blue-gray-800">
+                  {user?.name}
+                </Typography>
                 <div className="relative cursor-pointer w-[30px] h-[30px] rounded-full overflow-hidden  ">
                   <img
                     src={`${
@@ -103,12 +106,15 @@ export function DashboardNavbar() {
                 {/* <UserCircleIcon className="h-5 w-5 text-blue-gray-500" /> */}
                 {/* Sign In */}
               </Button>
-              <IconButton
+              <Button
                 variant="text"
                 color="blue-gray"
-                className="grid xl:hidden"
+                className=" xl:hidden flex items-center px-2 py-0 gap-1"
               >
-                <div className="relative cursor-pointer w-[20px] h-[20px] rounded-full overflow-hidden  ">
+                <Typography className="antialiased tracking-normal font-sans text-sm font-semibold leading-snug text-blue-gray-800">
+                  {user?.name}
+                </Typography>
+                <div className="relative cursor-pointer w-[20px] h-[20px] rounded-full overflow-hidden">
                   <img
                     src={`${
                       user?.image != null
@@ -119,7 +125,7 @@ export function DashboardNavbar() {
                     className="w-full h-full object-cover"
                   />
                 </div>
-              </IconButton>
+              </Button>
             </Link>
           ) : (
             <Link to="/auth/sign-in">
