@@ -80,6 +80,10 @@ const schema = yup.object({
     .string("Vui lòng chọn mục đích của quán")
     .trim()
     .required("Vui lòng chọn mục đích của quán"),
+  status: yup
+    .number("Vui lòng nhập trạng thái là số")
+    .oneOf([0, 1], "Trạng thái chỉ có thể là 0 hoặc 1")
+    .required("Vui lòng nhập trạng thái"),
 });
 // latitude: yup
 //   .string("Vui lòng nhập vĩ độ")
@@ -197,7 +201,7 @@ function EditBlogPage(props) {
       data.kind_id = +data.kind_id;
       data.purpose_id = +data.purpose_id;
 
-      data.status = 1;
+      data.status = +data.status;
       const formData = new FormData();
       if (data?.latitude || data?.longitude) {
         const regex = /^-?\d+(\.\d+)?$/;

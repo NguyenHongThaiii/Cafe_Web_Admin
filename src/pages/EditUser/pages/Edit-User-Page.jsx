@@ -63,7 +63,7 @@ function EditUserPage(props) {
     setValues((prev) => ({ ...prev, ...value }));
   };
   const handleOnSubmit = async (data) => {
-    data = { ...data, ...values };
+    data = { ...data, ...values, password: null };
     console.log(data);
     if (
       data?.roles === null ||

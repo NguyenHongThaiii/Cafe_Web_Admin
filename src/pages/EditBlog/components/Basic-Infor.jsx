@@ -122,6 +122,27 @@ function BasicInfor({
               {errorMessage}
             </span>
           )}
+          <div className="flex items-center ">
+            <label
+              htmlFor="status"
+              className="min-w-[80px] text-[14px] lg:mr-16 mr-3"
+            >
+              Status
+              <span className="text-[rgb(238,0,3)] pl-1 font-bold">*</span>
+            </label>
+            <InputControlCommon
+              control={control}
+              name="status"
+              id="status"
+              type="text"
+              placeholder="1 or 0"
+            />
+          </div>
+          {formState?.errors["status"] && (
+            <span className="block font-medium text-sm text-[rgb(238,0,3)] transition-all duration-150">
+              {formState.errors["status"]?.message}
+            </span>
+          )}
         </div>
       </div>
     </>
