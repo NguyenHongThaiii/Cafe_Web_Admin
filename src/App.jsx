@@ -33,11 +33,13 @@ import {
 
 function App() {
   const navigate = useNavigate();
-  const isLogin = JSON.parse(getLocalStorage(STORAGE_KEY.USER))?.id;
+  const user = JSON.parse(getLocalStorage(STORAGE_KEY.USER));
   const location = useLocation();
+  // console.log(user);
+  const index = user?.roles?.findIndex((role) => role?.name === "ROLE_ADMIN");
 
   useEffect(() => {
-    if (!isLogin) {
+    if (index === -1 || !user?.id) {
       navigate("/auth/sign-in");
     }
   }, [location.pathname]);
