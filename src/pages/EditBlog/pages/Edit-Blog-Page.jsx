@@ -104,6 +104,7 @@ function EditBlogPage(props) {
     reValidateMode: "onSubmit",
     resolver: yupResolver(schema),
   });
+  console.log(state);
   useEffect(() => {
     (async () => {
       try {
@@ -236,7 +237,7 @@ function EditBlogPage(props) {
       formData.append("convenience_id", data?.convenience_id);
       formData.append("description", data?.description);
       formData.append("location", data?.location);
-      formData.append("userId", state?.owner?.id);
+      formData.append("userId", state?.blog?.owner?.id);
       formData.append("kind_id", data?.kind_id);
       formData.append("purpose_id", data?.purpose_id);
 
