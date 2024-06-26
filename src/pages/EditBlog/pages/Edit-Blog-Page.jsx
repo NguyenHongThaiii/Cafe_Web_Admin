@@ -236,7 +236,7 @@ function EditBlogPage(props) {
       formData.append("convenience_id", data?.convenience_id);
       formData.append("description", data?.description);
       formData.append("location", data?.location);
-      formData.append("userId", user?.id);
+      formData.append("userId", state?.owner?.id);
       formData.append("kind_id", data?.kind_id);
       formData.append("purpose_id", data?.purpose_id);
 
