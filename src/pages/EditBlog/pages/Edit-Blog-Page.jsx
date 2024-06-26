@@ -155,6 +155,7 @@ function EditBlogPage(props) {
         setValue("email", blog?.email);
         setValue("facebook", blog?.facebook);
         setValue("phone", blog?.phone);
+        setValue("status", blog?.status);
       } catch (error) {
         navigate("/not-found");
       }
