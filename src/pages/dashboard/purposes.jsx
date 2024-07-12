@@ -242,7 +242,7 @@ export function Purposes() {
       <Modal
         show={openModal}
         size="md"
-        onClose={() => setOpenModal(false)}
+        onClose={() => !loading && setOpenModal(false)}
         popup
         className="bg-blue-gray-600 opacity-90"
         style={{
@@ -266,7 +266,9 @@ export function Purposes() {
               >
                 {"Yes, I'm sure"}
               </Button>
-              <Button onClick={() => setOpenModal(false)}>No, cancel</Button>
+              <Button disabled={loading} onClick={() => setOpenModal(false)}>
+                No, cancel
+              </Button>
             </div>
           </div>
         </Modal.Body>

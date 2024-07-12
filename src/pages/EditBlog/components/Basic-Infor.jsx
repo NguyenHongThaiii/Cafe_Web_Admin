@@ -26,6 +26,18 @@ function BasicInfor({
     label: area?.name,
     value: area?.id,
   }));
+  const optionsStatus = [
+    {
+      id: 1,
+      label: "Active",
+      value: 1,
+    },
+    {
+      id: 2,
+      label: "Inactive",
+      value: 0,
+    },
+  ];
   return (
     <>
       <p className="text-[21px] font-medium text-[rgb(238,0,3)] pb-2  border-b-[1px]">
@@ -120,6 +132,28 @@ function BasicInfor({
           {errorMessage && (
             <span className="block font-medium text-sm text-[rgb(238,0,3)] transition-all duration-150">
               {errorMessage}
+            </span>
+          )}
+          <div className="flex items-center ">
+            <label
+              htmlFor="status"
+              className="min-w-[80px] text-[14px] lg:mr-16 mr-3"
+            >
+              Status
+              <span className="text-[rgb(238,0,3)] pl-1 font-bold">*</span>
+            </label>
+            <SelectControl
+              control={control}
+              name="status"
+              id="status"
+              options={optionsStatus}
+              className="w-full h-[38px]"
+              defaultValue={blog?.status}
+            />
+          </div>
+          {formState?.errors["status"] && (
+            <span className="block font-medium text-sm text-[rgb(238,0,3)] transition-all duration-150">
+              {formState.errors["status"]?.message}
             </span>
           )}
         </div>

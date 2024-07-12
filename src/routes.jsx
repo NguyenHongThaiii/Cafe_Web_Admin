@@ -22,6 +22,7 @@ import {
   UserCircleIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
+import { Dashboard } from "@/layouts";
 
 const icon = {
   className: "w-5 h-5 text-inherit",

@@ -80,6 +80,10 @@ const schema = yup.object({
     .string("Vui lòng chọn mục đích của quán")
     .trim()
     .required("Vui lòng chọn mục đích của quán"),
+  status: yup
+    .number("Vui lòng nhập trạng thái là số")
+    .oneOf([0, 1], "Trạng thái chỉ có thể là 0 hoặc 1")
+    .required("Vui lòng nhập trạng thái"),
 });
 // latitude: yup
 //   .string("Vui lòng nhập vĩ độ")
@@ -100,6 +104,7 @@ function EditBlogPage(props) {
     reValidateMode: "onSubmit",
     resolver: yupResolver(schema),
   });
+  console.log(state);
   useEffect(() => {
     (async () => {
       try {
@@ -151,6 +156,7 @@ function EditBlogPage(props) {
         setValue("email", blog?.email);
         setValue("facebook", blog?.facebook);
         setValue("phone", blog?.phone);
+        setValue("status", blog?.status);
       } catch (error) {
         navigate("/not-found");
       }
@@ -197,7 +203,7 @@ function EditBlogPage(props) {
       data.kind_id = +data.kind_id;
       data.purpose_id = +data.purpose_id;
 
-      data.status = 1;
+      data.status = +data.status;
       const formData = new FormData();
       if (data?.latitude || data?.longitude) {
         const regex = /^-?\d+(\.\d+)?$/;
@@ -231,7 +237,7 @@ function EditBlogPage(props) {
       formData.append("convenience_id", data?.convenience_id);
       formData.append("description", data?.description);
       formData.append("location", data?.location);
-      formData.append("userId", user?.id);
+      formData.append("userId", state?.blog?.owner?.id);
       formData.append("kind_id", data?.kind_id);
       formData.append("purpose_id", data?.purpose_id);
 
